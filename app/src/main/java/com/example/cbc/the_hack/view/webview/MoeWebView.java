@@ -7,6 +7,8 @@ import android.util.AttributeSet;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import com.example.cbc.library.BuildConfig;
+
 /**
  * WebView
  * Created by bafsj on 2016-12-28.
