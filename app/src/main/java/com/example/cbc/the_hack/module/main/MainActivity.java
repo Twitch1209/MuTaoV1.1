@@ -75,7 +75,7 @@ public class MainActivity extends BaseActivity {
 
     private void initFragment() {
         mFragmentManager = getSupportFragmentManager();
-        mHomeFragment = HomeFragment.newInstance("home");
+        mHomeFragment = HomeFragment.newInstance("home", this);
         mFeedFragment = FeedFragment.newInstance("home");
         mMessageFragment = new MessageFragment();
         mMineFragment = new MineFragment();

@@ -2,82 +2,54 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:id="@+id/home_linear">
 
-    <include layout="@layout/include_toolbar"/>
+    <ViewFlipper
+        android:id="@+id/text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/spacing_10">
+        <ImageView
+            android:id="@+id/iv_avater"
+            android:layout_width="wrap_content"
+            android:layout_height="500px"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100px"
+            android:src="@drawable/icon" />
+    </ViewFlipper>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/home_card_shape">
+    <ViewFlipper
+        android:id="@+id/text_view_under"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/random_image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/app_placeholder"/>
+        <ImageView
+            android:id="@+id/text_avater"
+            android:layout_width="wrap_content"
+            android:layout_height="33dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/text" />
+    </ViewFlipper>
 
-            <TextView
-                android:id="@+id/image_source"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_alignTop="@+id/random_image"
-                android:layout_alignRight="@+id/random_image"
-                android:textColor="@color/white"
-                android:layout_margin="@dimen/spacing_6"
-                android:text="@string/hint_picture_source"/>
+    <ImageButton
+        android:id="@+id/btn_change"
+        android:layout_width="134px"
+        android:layout_height="128px"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/camara"
+        android:layout_marginTop="200dp"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:padding="@dimen/spacing_16"
-                android:orientation="vertical"
-                android:background="#7bffffff">
-
-                <TextView
-                    android:id="@+id/hitokoto_info"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:gravity="center_horizontal"
-                    android:paddingLeft="@dimen/spacing_48"
-                    android:paddingRight="@dimen/spacing_48"
-                    android:textColor="@color/textColorBasic"
-                    android:text="@string/app_placeholder"
-                    android:textSize="@dimen/font_18"
-                    android:layout_marginBottom="@dimen/spacing_16"/>
-
-                <TextView
-                    android:id="@+id/hitokoto_author"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:gravity="center_horizontal"
-                    android:text="@string/app_placeholder"
-                    android:layout_marginBottom="@dimen/spacing_8"/>
-
-                <TextView
-                    android:id="@+id/hitokoto_source"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:gravity="center_horizontal"
-                    android:text="@string/app_placeholder"
-                    android:layout_marginBottom="@dimen/spacing_8"/>
-
-            </LinearLayout>
-        </RelativeLayout>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    <com.github.rahatarmanahmed.cpv.CircularProgressView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/progress_view"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        app:cpv_animAutostart="true"
+        app:cpv_color="@color/cpv_default_color"
+        app:cpv_indeterminate="true" />
 
 </LinearLayout>

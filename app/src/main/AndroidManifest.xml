@@ -15,9 +15,9 @@
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="${APP_NAME}"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
 
@@ -28,13 +28,7 @@
 
         <activity
             android:name="com.example.cbc.the_hack.module.splash.SplashActivity"
-            android:theme="@style/AppTheme.Fullscreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme.Fullscreen"></activity>
         <activity android:name="com.example.cbc.the_hack.module.member.LoginActivity" />
         <activity
             android:name="com.example.cbc.the_hack.module.member.RegisterActivity"
@@ -44,7 +38,14 @@
             android:launchMode="singleTop" />
         <activity
             android:name="com.example.cbc.the_hack.module.main.MainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name="com.example.cbc.the_hack.module.feed.FeedActivity" />
         <activity android:name="com.example.cbc.the_hack.module.feed.PublishActivity" />
         <activity android:name="com.example.cbc.the_hack.module.mine.PersonalInfoActivity" />
@@ -91,8 +92,7 @@
             android:name="com.example.cbc.library.photo.PhotoActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.Fullscreen" />
-        <activity
-            android:name="com.example.cbc.the_hack.module.setting.SettingsActivity" />
+        <activity android:name="com.example.cbc.the_hack.module.setting.SettingsActivity" />
 
         <!-- PhotoPicker start -->
         <activity
@@ -107,8 +107,8 @@
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="me.happycao.fileprovider"
-            android:grantUriPermissions="true"
-            android:exported="false">
+            android:exported="false"
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
