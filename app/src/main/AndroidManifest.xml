@@ -51,7 +51,6 @@
         <activity android:name="com.example.cbc.the_hack.module.mine.PersonalInfoActivity" />
         <activity android:name="com.example.cbc.the_hack.module.mine.RelevantActivity" />
         <activity android:name="com.example.cbc.the_hack.module.setting.AboutActivity" />
-        <activity android:name="com.example.cbc.the_hack.module.future.FutureActivity" />
 
         <!-- 独立的web进程 -->
         <activity

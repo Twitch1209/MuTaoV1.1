@@ -46,7 +46,6 @@ public class MainActivity extends BaseActivity {
     private FragmentManager mFragmentManager;
     private HomeFragment mHomeFragment;
     private FeedFragment mFeedFragment;
-    private MessageFragment mMessageFragment;
     private MineFragment mMineFragment;
 
     private String mExit = "MM";
@@ -77,7 +76,6 @@ public class MainActivity extends BaseActivity {
         mFragmentManager = getSupportFragmentManager();
         mHomeFragment = HomeFragment.newInstance("home", this);
         mFeedFragment = FeedFragment.newInstance("home");
-        mMessageFragment = new MessageFragment();
         mMineFragment = new MineFragment();
         switchFragment(mHomeFragment);
     }
@@ -94,9 +92,6 @@ public class MainActivity extends BaseActivity {
                     case R.id.navigation_camera:
                         switchFragment(mFeedFragment);
                         return true;
-                    case R.id.navigation_interactive:
-                        switchFragment(mMessageFragment);
-                        return true;
                     case R.id.navigation_mine:
                         switchFragment(mMineFragment);
                         return true;
@@ -111,7 +106,7 @@ public class MainActivity extends BaseActivity {
         if (intent == null) return;
         Integer num = intent.getIntExtra(Constants.PASSED_UNREAD_NUM, 0);
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) mBottomNavigation.getChildAt(0);
-        BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(3);
+        BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(2);
         View badge = LayoutInflater.from(this).inflate(R.layout.main_menu_badge, menuView, false);
         itemView.addView(badge);
         badgeView = badge.findViewById(R.id.tv_msg_count);
