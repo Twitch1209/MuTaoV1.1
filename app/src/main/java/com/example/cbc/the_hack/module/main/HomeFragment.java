@@ -24,9 +24,9 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cbc.library.base.BaseFragment;
 import com.example.cbc.the_hack.common.util.SPUtil;
@@ -142,64 +142,60 @@ public class HomeFragment extends BaseFragment {
 
 
     private void uploadPicture() throws IOException {
-        if (path == "") {
-            Toast.makeText(this.getContext(), "未传入图片", Toast.LENGTH_LONG).show();
-            //Intent intent0=new Intent(MainActivity2.this,SecondActivity.class);
-            //Bundle bundle=new Bundle();
-            //bundle.putString("response","sdadsadsadasd");
-            //intent0.putExtras(bundle);
-            //startActivity(intent0);
-            return;
-        }
-        File file = new File(path);
-        HashMap<String, String> map = new HashMap<>();
-        map.put("token", "1234");
-        Log.d("---", "uploadPicture: 22222");
 
-        progressView.setVisibility(View.VISIBLE);
-        photoButton.setClickable(false);
-
-
-        OkHttp3Util.uploadFile(upload_api, file, "hhhhh.jpg", map, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.e("+++", "onFailure: " + e.getMessage());
-                e.printStackTrace();
-                getActivity().runOnUiThread(() -> {
-                    progressView.setVisibility(View.GONE);
-                    photoButton.setClickable(true);
-                    Toast.makeText(context, "服务器无响应!请稍后再试!", Toast.LENGTH_LONG).show();
-                });
-            }
-
-            @Override
-            public void onResponse(Call call, final Response response) throws IOException {
-
-                if (response.isSuccessful()) {
-//                    Intent intent0 = new Intent(context, MainActivity2.class);
-//                    Bundle bundle = new Bundle();
-//                    String s = response.body().string();
-//                    bundle.putString("response", s);
-//                    intent0.putExtras(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, CardFragment.newInstance(
+                        "[{\"title\":\"a\"}]")).commit();
+//        if (path.equals("")) {
+//            Toast.makeText(this.getContext(), "未传入图片", Toast.LENGTH_LONG).show();
+//            return;
+//        }
+//        File file = new File(path);
+//        HashMap<String, String> map = new HashMap<>();
+//        map.put("token", "1234");
+//        Log.d("---", "uploadPicture: 22222");
+//
+//        progressView.setVisibility(View.VISIBLE);
+//        photoButton.setClickable(false);
+//
+//
+//        OkHttp3Util.uploadFile(upload_api, file, "hhhhh.jpg", map, new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                Log.e("+++", "onFailure: " + e.getMessage());
+//                e.printStackTrace();
+//                getActivity().runOnUiThread(() -> {
+//                    progressView.setVisibility(View.GONE);
+//                    photoButton.setClickable(true);
+//                    Toast.makeText(context, "服务器无响应!请稍后再试!", Toast.LENGTH_LONG).show();
+//                });
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, final Response response) throws IOException {
+//
+//                if (response.isSuccessful()) {
 //                    getActivity().runOnUiThread(() -> {
 //                        progressView.setVisibility(View.GONE);
 //                        photoButton.setClickable(true);
 //                    });
-//                    startActivity(intent0);
-                } else {
-                    Looper.prepare();
-                    Toast.makeText(context, "服务器无响应!请稍后再试!", Toast.LENGTH_LONG).show();
-                    String log = response.body().toString();
-                    NaviDebug naviDebug = NaviDebug.getInstance();
-                    naviDebug.saveLog(log);
-                    getActivity().runOnUiThread(() -> {
-                        progressView.setVisibility(View.GONE);
-                        photoButton.setClickable(true);
-                    });
-                    Looper.loop();
-                }
-            }
-        });
+//                    String s = response.body().toString();
+//                    getActivity().getSupportFragmentManager().beginTransaction()
+//                            .replace(R.id.fragment_container, CardFragment.newInstance(s)).commit();
+//                } else {
+//                    Looper.prepare();
+//                    Toast.makeText(context, "服务器无响应!请稍后再试!", Toast.LENGTH_LONG).show();
+//                    String log = response.body().toString();
+//                    NaviDebug naviDebug = NaviDebug.getInstance();
+//                    naviDebug.saveLog(log);
+//                    getActivity().runOnUiThread(() -> {
+//                        progressView.setVisibility(View.GONE);
+//                        photoButton.setClickable(true);
+//                    });
+//                    Looper.loop();
+//                }
+//            }
+//        });
     }
 
     private void changeAvater() {
