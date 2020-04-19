@@ -5,37 +5,37 @@ import java.io.Serializable;
 // 回复
 public class Reply implements Serializable {
 
-    private String id;
-    private String feedId;
-    private String commentId;
+    private Integer cid;
+    private Integer pid;
+    private Integer p_cid;
     private User user;
     private User toUser;
-    private String commentInfo;
-    private String createTime;
-    private String updateTime;
+    private String content;
+    private String create_time;
+    private String update_time;
 
-    public String getId() {
-        return id;
+    public Integer getId() {
+        return cid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(Integer id) {
+        this.cid = id;
     }
 
-    public String getFeedId() {
-        return feedId;
+    public Integer getFeedId() {
+        return pid;
     }
 
-    public void setFeedId(String feedId) {
-        this.feedId = feedId;
+    public void setFeedId(Integer feedId) {
+        this.pid = feedId;
     }
 
-    public String getCommentId() {
-        return commentId;
+    public Integer getCommentId() {
+        return p_cid;
     }
 
-    public void setCommentId(String commentId) {
-        this.commentId = commentId;
+    public void setCommentId(Integer commentId) {
+        this.p_cid = commentId;
     }
 
     public User getUser() {
@@ -55,26 +55,26 @@ public class Reply implements Serializable {
     }
 
     public String getCommentInfo() {
-        return commentInfo;
+        return content;
     }
 
     public void setCommentInfo(String commentInfo) {
-        this.commentInfo = commentInfo;
+        this.content = commentInfo;
     }
 
     public String getCreateTime() {
-        return createTime;
+        return create_time;
     }
 
     public void setCreateTime(String createTime) {
-        this.createTime = createTime;
+        this.create_time = createTime;
     }
 
     public String getUpdateTime() {
-        return updateTime;
+        return update_time;
     }
 
     public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
+        this.update_time = updateTime;
     }
 }

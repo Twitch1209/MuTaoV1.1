@@ -68,7 +68,7 @@ public class SplashActivity extends BaseActivity {
         String userId = SPUtil.build().getString(Constants.SP_USER_ID);
         OkUtil.post()
                 .url(Api.unreadComment)
-                .addParam("userId", userId)
+                .addParam("uid", userId)
                 .execute(new ResultCallback<Result<Integer>>() {
                     @Override
                     public void onSuccess(Result<Integer> response) {

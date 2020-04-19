@@ -127,7 +127,7 @@ public class RelevantActivity extends BaseActivity {
         String userId = SPUtil.build().getString(Constants.SP_USER_ID);
         OkUtil.post()
                 .url(Api.updateUnread)
-                .addParam("userId", userId)
+                .addParam("uid", userId)
                 .execute(new ResultCallback<Result<Integer>>() {
                     @Override
                     public void onSuccess(Result<Integer> response) {
@@ -147,7 +147,7 @@ public class RelevantActivity extends BaseActivity {
         Integer pageSize = 20;
         OkUtil.post()
                 .url(url)
-                .addParam("userId", saveId)
+                .addParam("uid", saveId)
                 .addParam("pageNum", pageNum)
                 .addParam("pageSize", pageSize)
                 .setLoadDelay()
@@ -156,7 +156,7 @@ public class RelevantActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Result<PageInfo<Relevant>> response) {
                         String code = response.getCode();
-                        if (!"00000".equals(code)) {
+                        if (!"200".equals(code)) {
                             showToast("加载失败，下拉重新加载");
                             return;
                         }

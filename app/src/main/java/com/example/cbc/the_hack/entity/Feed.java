@@ -6,11 +6,11 @@ import java.util.List;
 // 动态
 public class Feed implements Serializable {
 
-    private String id;
+    private Integer pid;
     // 用户信息
     private User user;
-    private String feedInfo;
-    private Integer viewNum;
+    private String content;
+    private Integer view_num;
     // 评论数
     private Integer commentNum;
     // 当前用户是否点赞
@@ -19,15 +19,15 @@ public class Feed implements Serializable {
     private List<Like> likeList;
     // 相册
     private List<String> photoList;
-    private String createTime;
-    private String updateTime;
+    private String create_time;
+    private String update_time;
 
-    public String getId() {
-        return id;
+    public Integer getId() {
+        return pid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(Integer id) {
+        this.pid = id;
     }
 
     public User getUser() {
@@ -39,19 +39,19 @@ public class Feed implements Serializable {
     }
 
     public String getFeedInfo() {
-        return feedInfo;
+        return content;
     }
 
     public void setFeedInfo(String feedInfo) {
-        this.feedInfo = feedInfo;
+        this.content = feedInfo;
     }
 
     public Integer getViewNum() {
-        return viewNum;
+        return view_num;
     }
 
     public void setViewNum(Integer viewNum) {
-        this.viewNum = viewNum;
+        this.view_num = viewNum;
     }
 
     public Integer getCommentNum() {
@@ -87,34 +87,34 @@ public class Feed implements Serializable {
     }
 
     public String getCreateTime() {
-        return createTime;
+        return create_time;
     }
 
     public void setCreateTime(String createTime) {
-        this.createTime = createTime;
+        this.create_time = createTime;
     }
 
     public String getUpdateTime() {
-        return updateTime;
+        return update_time;
     }
 
     public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
+        this.update_time = updateTime;
     }
 
     @Override
     public String toString() {
         return "Feed{" +
-                "id='" + id + '\'' +
+                "pid='" + pid + '\'' +
                 ", user=" + user +
-                ", feedInfo='" + feedInfo + '\'' +
-                ", viewNum=" + viewNum +
+                ", content='" + content + '\'' +
+                ", view_num=" + view_num +
                 ", commentNum=" + commentNum +
                 ", like=" + like +
                 ", likeList=" + likeList +
                 ", photoList=" + photoList +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
+                ", create_time=" + create_time +
+                ", update_time=" + update_time +
                 '}';
     }
 }

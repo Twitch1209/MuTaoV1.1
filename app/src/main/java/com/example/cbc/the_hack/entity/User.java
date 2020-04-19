@@ -5,17 +5,17 @@ import java.io.Serializable;
 // 用户
 public class User implements Serializable {
 
-    private String id;
+    private Integer uid;
     private String username;
     private String avatar;
     private String imToken;
 
-    public String getId() {
-        return id;
+    public Integer getId() {
+        return uid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(Integer id) {
+        this.uid = id;
     }
 
     public String getUsername() {

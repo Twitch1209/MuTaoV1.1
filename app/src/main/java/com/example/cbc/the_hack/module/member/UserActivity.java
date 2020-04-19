@@ -282,17 +282,17 @@ public class UserActivity extends BaseActivity {
             mSwipeRefreshLayout.setRefreshing(true);
         }
         OkUtil.post()
-                .url(Api.pageFeed)
+                .url(Api.pageUserFeed)
                 .addParam("pageNum", pageNum)
                 .addParam("pageSize", pageSize)
-                .addParam("searchUserId", mUserId)
-                .addParam("userId", saveUserId)
+                .addParam("searchUid", mUserId)
+                .addParam("uid", saveUserId)
                 .execute(new ResultCallback<Result<PageInfo<Feed>>>() {
                     @Override
                     public void onSuccess(Result<PageInfo<Feed>> response) {
                         mSwipeRefreshLayout.setRefreshing(false);
                         String code = response.getCode();
-                        if (!"00000".equals(code)) {
+                        if (!"200".equals(code)) {
                             mAdapter.updateLoadStatus(LoadMord.LOAD_NONE);
                             showToast(R.string.toast_get_feed_error);
                             return;

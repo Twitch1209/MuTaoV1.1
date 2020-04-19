@@ -6,25 +6,25 @@ import java.util.List;
 // 与我相关
 public class Relevant implements Serializable {
 
-    private Feed feed;
-    private Comment comment;
+    private Feed postDetail;
+    private Comment commentDetail;
     private Integer replyNum;
     private List<Reply> replyList;
 
     public Comment getComment() {
-        return comment;
+        return commentDetail;
     }
 
     public void setComment(Comment comment) {
-        this.comment = comment;
+        this.commentDetail = comment;
     }
 
     public Feed getFeed() {
-        return feed;
+        return postDetail;
     }
 
     public void setFeed(Feed feed) {
-        this.feed = feed;
+        this.postDetail = feed;
     }
 
     public Integer getReplyNum() {

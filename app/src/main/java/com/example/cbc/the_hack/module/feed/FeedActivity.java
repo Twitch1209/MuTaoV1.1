@@ -100,10 +100,10 @@ public class FeedActivity extends BaseActivity {
     private final int MSG_EVALUATE = 0;
     private final int MSG_REPLY = 1;
 
-    private String saveId;
-    private String mFeedId;
-    private String mCommentId;
-    private String toUid;
+    private Integer saveId;
+    private Integer mFeedId;
+    private Integer mCommentId;
+    private Integer toUid;
     private InputMethodManager imm;
     private EvaluateAdapter mAdapter;
     private LoadingDialog loadingProgress;
@@ -125,7 +125,7 @@ public class FeedActivity extends BaseActivity {
                 .setTitleCenter(R.style.AppTheme_Toolbar_TextAppearance)
                 .build();
 
-        saveId = SPUtil.build().getString(Constants.SP_USER_ID);
+        saveId = SPUtil.build().getInt(Constants.SP_USER_ID);
 
         // 输入状态模式默认为评论
         MSG_MODE = MSG_EVALUATE;
@@ -154,7 +154,7 @@ public class FeedActivity extends BaseActivity {
                         break;
                     case R.id.evaluate_body:
                         MSG_MODE = MSG_REPLY;
-                        mCommentId = String.valueOf(comment.getId());
+                        mCommentId = comment.getId();
                         toUid = comment.getUser().getId();
                         mEditTuCao.setHint("回复：" + comment.getUser().getUsername());
                         openSofInput(mEditTuCao);
@@ -166,7 +166,7 @@ public class FeedActivity extends BaseActivity {
             @Override
             public void onItemChildClick(View view, String eid, Reply reply) {
                 MSG_MODE = MSG_REPLY;
-                mCommentId = eid;
+                mCommentId = Integer.valueOf(eid);
                 toUid = reply.getUser().getId();
                 mEditTuCao.setHint("回复：" + reply.getUser().getUsername());
                 openSofInput(mEditTuCao);
@@ -235,7 +235,7 @@ public class FeedActivity extends BaseActivity {
     private void postViewFeed() {
         OkUtil.post()
                 .url(Api.viewFeed)
-                .addParam("id", mFeedId)
+                .addParam("pid", mFeedId)
                 .execute();
     }
 
@@ -289,15 +289,15 @@ public class FeedActivity extends BaseActivity {
     /**
      * 添加评论
      */
-    public void addEvaluate(String feedId, String uid, String toUid, String comment) {
+    public void addEvaluate(Integer feedId, Integer uid, Integer toUid, String comment) {
         Log.d(getClass().getName(), feedId + "," + uid + "," + toUid + "," + comment);
         OkUtil.post()
                 .url(Api.saveComment)
-                .addParam("feedId", feedId)
-                .addParam("userId", uid)
-                .addParam("toUserId", toUid)
-                .addParam("commentInfo", comment)
+                .addParam("content", comment)
+                .addParam("p_cid", feedId)
+                .addParam("p_uid", toUid)
                 .addParam("type", "0")
+                .addParam("uid", uid)
                 .execute(new ResultCallback<Result>() {
                     @Override
                     public void onSuccess(Result response) {
@@ -317,15 +317,15 @@ public class FeedActivity extends BaseActivity {
     /**
      * 添加回复
      */
-    public void addReply(String feedId, String commentId, String uid, String toUid, String reply) {
+    public void addReply(Integer feedId, Integer commentId, Integer uid, Integer toUid, String reply) {
         OkUtil.post()
                 .url(Api.saveComment)
-                .addParam("feedId", feedId)
-                .addParam("commentId", commentId)
-                .addParam("userId", uid)
-                .addParam("toUserId", toUid)
-                .addParam("commentInfo", reply)
+                .addParam("content", reply)
+                .addParam("p_cid", commentId)
+                .addParam("p_uid", toUid)
+                .addParam("pid", feedId)
                 .addParam("type", "1")
+                .addParam("uid", uid)
                 .execute(new ResultCallback<Result>() {
                     @Override
                     public void onSuccess(Result response) {
@@ -343,19 +343,19 @@ public class FeedActivity extends BaseActivity {
     /**
      * 获取评论数据
      */
-    public void getEvaluateList(String feedId) {
+    public void getEvaluateList(Integer feedId) {
         Integer pageNum = 1;
         Integer pageSize = 20;
         OkUtil.post()
                 .url(Api.pageComment)
-                .addParam("feedId", feedId)
+                .addParam("pid", feedId)
                 .addParam("pageNum", pageNum)
                 .addParam("pageSize", pageSize)
                 .execute(new ResultCallback<Result<PageInfo<Comment>>>() {
                     @Override
                     public void onSuccess(Result<PageInfo<Comment>> response) {
                         String code = response.getCode();
-                        if ("00000".equals(code)) {
+                        if ("200".equals(code)) {
                             setData(response.getData().getList());
                         }
                     }

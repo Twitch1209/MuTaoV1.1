@@ -110,7 +110,7 @@ public class RegisterActivity extends BaseActivity {
                     public void onSuccess(Result<UserInfo> response) {
                         String code = response.getCode();
                         switch (code) {
-                            case "00000":
+                            case "200":
                                 showToast(R.string.toast_reg_success);
                                 UserInfo user = response.getData();
                                 SPUtil.build().putString(Constants.SP_USER_NAME, user.getUsername());

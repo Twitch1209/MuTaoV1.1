@@ -68,39 +68,43 @@ public class Api {
     /**
      * 动态列表
      */
-    public static String pageFeed = baseUrl + "/feed/page";
+    public static String pageFeed = baseUrl + "/post/page";
+    /**
+     * 用户个人动态列表
+     */
+    public static String pageUserFeed = baseUrl + "/post/user";
     /**
      * 发布动态
      */
-    public static String saveFeed = baseUrl + "/feed/save";
+    public static String saveFeed = baseUrl + "/post/publish";
     /**
      * 查看动态
      */
-    public static String viewFeed = baseUrl + "/feed/view";
+    public static String viewFeed = baseUrl + "/post/view";
     /**
      * 与我相关
      */
-    public static String relevant = baseUrl + "/feed/relevant";
+    public static String relevant = baseUrl + "/post/related";
     /**
      * 我的回复
      */
-    public static String mineReply = baseUrl + "/feed/mine/reply";
+    public static String mineReply = baseUrl + "/post/my-reply";
     /**
      * 新增动态操作,如点赞
      */
-    public static String saveAction = baseUrl + "/feed/action/save";
+    public static String saveAction = baseUrl + "/post-action/add";
     /**
      * 移除动态操作,如取消赞
      */
-    public static String removeAction = baseUrl + "/feed/action/remove";
+    public static String removeAction = baseUrl + "/post-action/delete";
     /**
      * 动态评论列表
      */
-    public static String pageComment = baseUrl + "/feed/comment/page";
+    public static String pageComment = baseUrl + "/comment/page";
     /**
      * 新增动态评论
      */
-    public static String saveComment = baseUrl + "/feed/comment/save";
+    public static String saveComment = baseUrl + "/comment/publish";
     /**
      * 获取最新app版本
      */
@@ -116,11 +120,11 @@ public class Api {
     /**
      * 未读条数
      */
-    public static String unreadComment = baseUrl + "/feed/comment/unread";
+    public static String unreadComment = baseUrl + "/comment/get-unread";
     /**
      * 更新未读为已读
      */
-    public static String updateUnread = baseUrl + "/feed/comment/unread/update";
+    public static String updateUnread = baseUrl + "/comment/unread-update";
     /**
      * 保存写给未来
      */

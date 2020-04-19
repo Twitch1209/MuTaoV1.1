@@ -215,14 +215,14 @@ public class FeedFragment extends BaseFragment {
     private void postAddLike(final Feed feed, final int position) {
         OkUtil.post()
                 .url(Api.saveAction)
-                .addParam("feedId", feed.getId())
-                .addParam("userId", saveUid)
+                .addParam("pid", feed.getId())
+                .addParam("uid", saveUid)
                 .addParam("type", "0")
                 .execute(new ResultCallback<Result>() {
                     @Override
                     public void onSuccess(Result response) {
                         String code = response.getCode();
-                        if (!"00000".equals(code)) {
+                        if (!"200".equals(code)) {
                             showToast("点赞失败");
                             return;
                         }
@@ -249,7 +249,7 @@ public class FeedFragment extends BaseFragment {
         String uid = SPUtil.build().getString(Constants.SP_USER_ID);
         OkUtil.post()
                 .url(Api.pageFeed)
-                .addParam("userId", uid)
+                .addParam("uid", uid)
                 .addParam("pageNum", pageNum)
                 .addParam("pageSize", pageSize)
                 .execute(new ResultCallback<Result<PageInfo<Feed>>>() {
@@ -257,7 +257,7 @@ public class FeedFragment extends BaseFragment {
                     public void onSuccess(Result<PageInfo<Feed>> response) {
                         mSwipeRefreshLayout.setRefreshing(false);
                         String code = response.getCode();
-                        if (!"00000".equals(code)) {
+                        if (!"200".equals(code)) {
                             mAdapter.updateLoadStatus(LoadMord.LOAD_NONE);
                             showToast(R.string.toast_get_feed_error);
                             return;

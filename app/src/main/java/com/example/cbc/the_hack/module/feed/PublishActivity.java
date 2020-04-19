@@ -15,8 +15,12 @@ import com.example.cbc.library.util.ToolbarUtil;
 import com.example.cbc.the_hack.adapter.PhotoSelAdapter;
 import com.example.cbc.the_hack.common.util.ImageUtil;
 
+import java.io.File;
+import java.io.IOException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,9 +35,18 @@ import com.example.cbc.the_hack.common.result.Result;
 import com.example.cbc.the_hack.common.util.SPUtil;
 import com.example.cbc.the_hack.entity.Feed;
 import com.example.cbc.the_hack.module.main.MainActivity;
+
+import org.json.JSONObject;
+
 import me.iwf.photopicker.PhotoPicker;
 import me.iwf.photopicker.PhotoPreview;
 import okhttp3.Call;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class PublishActivity extends BaseActivity {
 
@@ -142,34 +155,44 @@ public class PublishActivity extends BaseActivity {
 
         // 压缩图片
         photos = ImageUtil.compressorImage(this, photos);
+        List<String> photoUrlList = new ArrayList<>();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .readTimeout(5, TimeUnit.SECONDS).build();
+        boolean oneFail = false;
 
-        OkUtil.post()
-                .url(Api.uploadFeedImage)
-                .addFiles("file", ImageUtil.pathToImageFile(photos))
-                .execute(new ResultCallback<Result<List<String>>>() {
-                    @Override
-                    public void onSuccess(Result<List<String>> response) {
-                        String code = response.getCode();
-                        if ("00100".equals(code)) {
-                            showToast(response.getMsg());
-                            addPhotoAdd(mPhotos);
-                            return;
-                        }
-                        if (!"00000".equals(code)) {
-                            showToast("图片上传失败");
-                            addPhotoAdd(mPhotos);
-                            return;
-                        }
-                        // 发送动态
-                        postSaveFeed(response.getData());
-                    }
-
-                    @Override
-                    public void onError(Call call, Exception e) {
-                        showToast("图片上传失败");
-                        addPhotoAdd(mPhotos);
-                    }
-                });
+        for (File photoFile: ImageUtil.pathToImageFile(photos)) {
+            RequestBody requestBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("smfile", "image",
+                            RequestBody.create(MediaType.parse("image/*"), photoFile))
+                    .build();
+            Request request = new Request.Builder()
+                    .url("https://sm.ms/api/v2/upload")
+                    .addHeader("Content-Type", "multipart/form-data")
+                    .addHeader("Authorization", "ZNtF4YN9va6lBsSKpg31PKlkOCZIcEsC")
+                    .post(requestBody)
+                    .build();
+            try {
+                Response response = client.newCall(request).execute();
+                if (response.code() == 200) {
+                    JSONObject jsonObject = new JSONObject(response.body().string());
+                    JSONObject data = jsonObject.getJSONObject("data");
+                    photoUrlList.add(data.getString("url"));
+                } else {
+                    oneFail = true;
+                    break;
+                }
+            } catch (Exception e) {
+                oneFail = true;
+                break;
+            }
+        }
+        if (oneFail) {
+            showToast("图片上传失败");
+            addPhotoAdd(mPhotos);
+        } else {
+            postSaveFeed(photoUrlList);
+        }
     }
 
     // 发布动态
@@ -177,15 +200,15 @@ public class PublishActivity extends BaseActivity {
         removePhotoAdd(uploadImg);
         OkUtil.post()
                 .url(Api.saveFeed)
-                .addParam("userId", mUid)
-                .addParam("feedInfo", mInfo)
-                .addUrlParams("photoList", uploadImg)
+                .addParam("uid", mUid)
+                .addParam("content", mInfo)
+                .addUrlParams("imageList", uploadImg)
                 .execute(new ResultCallback<Result<Feed>>() {
                     @Override
                     public void onSuccess(Result<Feed> response) {
                         dismissLoading();
                         String code = response.getCode();
-                        if (!"00000".equals(code)) {
+                        if (!"200".equals(code)) {
                             showToast("发布失败");
                             addPhotoAdd(mPhotos);
                             return;

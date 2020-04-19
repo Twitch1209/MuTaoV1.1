@@ -115,14 +115,14 @@ public class ShareFeedActivity extends BaseActivity {
     private void postSaveFeed() {
         OkUtil.post()
                 .url(Api.saveFeed)
-                .addParam("userId", mUid)
-                .addParam("feedInfo", mInfo.toString())
+                .addParam("uid", mUid)
+                .addParam("content", mInfo.toString())
                 .execute(new ResultCallback<Result<Feed>>() {
                     @Override
                     public void onSuccess(Result<Feed> response) {
                         dismissLoading();
                         String code = response.getCode();
-                        if (!"00000".equals(code)) {
+                        if (!"200".equals(code)) {
                             showToast("发布失败");
                             return;
                         }

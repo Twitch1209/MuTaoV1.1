@@ -171,7 +171,7 @@ public class PersonalInfoActivity extends BaseActivity {
 
                     @Override
                     public void onSuccess(Result<UserInfo> response) {
-                        if ("00000".equals(response.getCode())) {
+                        if ("200".equals(response.getCode())) {
                             setUserInfo(response.getData());
                         } else {
                             onBackPressed();
@@ -202,7 +202,7 @@ public class PersonalInfoActivity extends BaseActivity {
                     public void onSuccess(Result<List<String>> response) {
                         String code = response.getCode();
                         List<String> photos = response.getData();
-                        if (!"00000".equals(code) || photos == null || photos.size() == 0) {
+                        if (!"200".equals(code) || photos == null || photos.size() == 0) {
                             showUserImageUpdateError();
                             return;
                         }
@@ -231,7 +231,7 @@ public class PersonalInfoActivity extends BaseActivity {
 
                     @Override
                     public void onSuccess(Result<UserInfo> response) {
-                        if ("00000".equals(response.getCode())) {
+                        if ("200".equals(response.getCode())) {
                             showUserUpdateSuccess();
                             setUserInfo(response.getData());
                         } else {
