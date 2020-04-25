@@ -22,7 +22,7 @@
                 android:id="@+id/mine_top"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:background="@drawable/img_mine_bc">
+                android:background="@drawable/background_1">
 
                 <LinearLayout
                     android:id="@+id/user_body"
