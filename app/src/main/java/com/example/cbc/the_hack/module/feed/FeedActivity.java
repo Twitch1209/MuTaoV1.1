@@ -164,9 +164,9 @@ public class FeedActivity extends BaseActivity {
             }
 
             @Override
-            public void onItemChildClick(View view, String eid, Reply reply) {
+            public void onItemChildClick(View view, Integer eid, Reply reply) {
                 MSG_MODE = MSG_REPLY;
-                mCommentId = Integer.valueOf(eid);
+                mCommentId = eid;
                 toUid = reply.getUser().getId();
                 mEditTuCao.setHint("回复：" + reply.getUser().getUsername());
                 openSofInput(mEditTuCao);

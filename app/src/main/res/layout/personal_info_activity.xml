@@ -79,6 +79,7 @@
                     android:layout_centerVertical="true"
                     android:text="性別" />
                  <TextView
+                     android:id="@+id/person_sex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -101,7 +102,7 @@
                     android:text="个性签名"/>
 
                 <TextView
-                    android:id="@+id/user_signature"
+                    android:id="@+id/person_signature"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
                     android:layout_marginTop="@dimen/spacing_8"

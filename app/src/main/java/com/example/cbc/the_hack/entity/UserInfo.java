@@ -11,15 +11,25 @@ import java.io.Serializable;
  */
 public class UserInfo implements Serializable {
 
-    private String id;
     private Integer uid;
+    private String create_time;
     private String username;
     private String phone;
     private Integer sex;
-    private String qq;
     private String avatar;
-    private String imToken;
     private String signature;
+
+    public String getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(String create_time) {
+        this.create_time = create_time;
+    }
+
+    private String id;
+    private String qq;
+    private String imToken;
     private String loginTime;
     private String createTime;
     private String updateTime;

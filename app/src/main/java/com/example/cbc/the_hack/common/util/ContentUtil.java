@@ -35,7 +35,7 @@ public class ContentUtil {
      * 设置用户头像，相对路径
      */
     public static void loadUserAvatar(ImageView imageView, String avatar) {
-        String url = Constants.IMG_URL + avatar;
+        String url = avatar;
         loadAvatar(imageView, url);
     }
 

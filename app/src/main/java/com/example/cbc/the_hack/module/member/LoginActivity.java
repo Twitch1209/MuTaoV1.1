@@ -13,6 +13,7 @@ import com.example.cbc.library.util.ToolbarUtil;
 import com.example.cbc.library.view.LoadingDialog;
 import com.example.cbc.library.view.MoeToast;
 
+import java.io.IOException;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -25,9 +26,17 @@ import com.example.cbc.the_hack.common.okhttp.ResultCallback;
 import com.example.cbc.the_hack.common.result.Result;
 import com.example.cbc.the_hack.common.result.ResultConstant;
 import com.example.cbc.the_hack.common.util.SPUtil;
+import com.example.cbc.the_hack.entity.UserInfo;
 import com.example.cbc.the_hack.entity.UserToken;
 import com.example.cbc.the_hack.module.main.MainActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /**
  * 用户登录
@@ -86,24 +95,20 @@ public class LoginActivity extends BaseActivity {
                 .url(Api.userLogin)
                 .addParam("username", userName)
                 .addParam("password", userPwd)
+                .addParam("grant_type","password")
+                .addHeader("Authorization","Basic YW5kcm9pZDpzZWNyZXQ=")
                 .setProgressDialog(loginProgress)
-                .execute(new ResultCallback<Result<UserToken>>() {
+                .execute(new ResultCallback<UserToken>() {
                     @Override
-                    public void onSuccess(Result<UserToken> response) {
-                        String code = response.getCode();
-                        switch (code) {
-                            case ResultConstant.CODE_SUCCESS:
-                                UserToken user = response.getData();
-                                SPUtil.build().putBoolean(Constants.SP_BEEN_LOGIN, true);
-                                SPUtil.build().putString(Constants.SP_USER_ID, user.getId());
-                                SPUtil.build().putString(Constants.SP_USER_NAME, user.getUsername());
-                                SPUtil.build().putString(Api.X_APP_TOKEN, user.getToken());
-                                OkUtil.newInstance().addCommonHeader(Api.X_APP_TOKEN, user.getToken());
-                                goHome();
-                                break;
-                            default:
-                                showToast(R.string.toast_pwd_error);
-                                break;
+                    public void onSuccess(UserToken response) {
+                        if(response.getError()==null){
+                            SPUtil.build().putBoolean(Constants.SP_BEEN_LOGIN, true);
+                            SPUtil.build().putString(Api.X_APP_TOKEN, response.getAccess_token());
+                            SPUtil.build().putString(Api.X_REFRESH_TOKEN, response.getRefresh_token());
+                            OkUtil.newInstance().addCommonHeader(Api.X_APP_TOKEN, "bearer " + response.getAccess_token());
+                            postLogin(userName);
+                        }else {
+                            showToast(R.string.toast_pwd_error);
                         }
                     }
 
@@ -114,6 +119,36 @@ public class LoginActivity extends BaseActivity {
                 });
     }
 
+    private void postLogin(final String userName){
+        OkUtil.get()
+                .url(Api.userInfo)
+                .addUrlParams("username", userName)
+                .setProgressDialog(loginProgress)
+                .execute(new ResultCallback<Result<UserInfo>>() {
+                    @Override
+                    public void onSuccess(Result<UserInfo> response) {
+                        String code = response.getCode();
+                        switch (code) {
+                            case ResultConstant.CODE_SUCCESS:
+                                UserInfo user = response.getData();
+                                SPUtil.build().putBoolean(Constants.SP_BEEN_LOGIN, true);
+                                SPUtil.build().putInt(Constants.SP_USER_ID, user.getUid());
+                                SPUtil.build().putString(Constants.SP_USER_NAME, user.getUsername());
+                                goHome();
+                                break;
+                            default:
+                                showToast(R.string.toast_pwd_error);
+                                break;
+                        }
+                    }
+                    @Override
+                    public void onError(Call call, Exception e) {
+                        showToast(R.string.toast_login_error);
+                    }
+                });
+    }
+
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if ((System.currentTimeMillis() - mExitTime) > 2000) {
