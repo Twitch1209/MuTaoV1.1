@@ -68,8 +68,8 @@ public class MineFragment extends BaseFragment {
     TextView mMineRelevant;
     @BindView(R.id.action_setting)
     TextView mMineSetting;
-    @BindView(R.id.action_about)
-    TextView mMineAbout;
+    //@BindView(R.id.action_about)
+    //TextView mMineAbout;
     @BindView(R.id.action_sign_out)
     TextView mMineSignOut;
 
@@ -166,7 +166,7 @@ public class MineFragment extends BaseFragment {
         }
     }
 
-    @OnClick({R.id.user_body, R.id.action_reply, R.id.action_relevant, R.id.action_setting, R.id.action_about, R.id.action_sign_out})
+    @OnClick({R.id.user_body, R.id.action_reply, R.id.action_relevant, R.id.action_setting, R.id.action_sign_out})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.user_body:
@@ -181,9 +181,9 @@ public class MineFragment extends BaseFragment {
             case R.id.action_setting:
                 gotoSettings();
                 break;
-            case R.id.action_about:
+            /*case R.id.action_about:
                 gotoAbout();
-                break;
+                break;*/
             case R.id.action_sign_out:
                 showLogoutDialog();
                 break;

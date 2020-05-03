@@ -13,7 +13,7 @@
     <application
         android:name="com.example.cbc.the_hack.module.LxApplication"
         android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon_round"
         android:label="${APP_NAME}"
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -31,6 +31,10 @@
             android:theme="@style/AppTheme.Fullscreen">
         </activity>
         <activity android:name="com.example.cbc.the_hack.module.member.LoginActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.example.cbc.the_hack.module.member.RegisterActivity"
@@ -41,10 +45,6 @@
         <activity
             android:name="com.example.cbc.the_hack.module.main.MainActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name="com.example.cbc.the_hack.module.feed.FeedActivity" />
         <activity android:name="com.example.cbc.the_hack.module.feed.PublishActivity" />
