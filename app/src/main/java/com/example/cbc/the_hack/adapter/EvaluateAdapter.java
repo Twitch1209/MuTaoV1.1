@@ -42,7 +42,7 @@ public class EvaluateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public interface OnItemListener {
         void onItemClick(View view, Comment comment);
 
-        void onItemChildClick(View view, String eid, Reply reply);
+        void onItemChildClick(View view, Integer eid, Reply reply);
     }
 
     public void setOnItemListener(OnItemListener onItemListener) {
@@ -141,7 +141,7 @@ public class EvaluateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ReplyAdapter adapter = new ReplyAdapter(context, comment.getReplyList());
             mRecyclerView.setAdapter(adapter);
 
-            final String eid = comment.getId();
+            final Integer eid = comment.getId();
             adapter.setOnItemListener(new ReplyAdapter.OnItemListener() {
                 @Override
                 public void onItemClick(View view, Reply reply) {

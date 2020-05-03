@@ -75,6 +75,17 @@ public class CardFragment extends BaseFragment implements CardStackListener {
         manager = new CardStackLayoutManager(this.getContext(), this);
         adapter = new CardStackAdapter(poemList);
         setupCardStackView();
+
+        view.findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container,
+                                HomeFragment.newInstance("home", getContext()))
+                        .commit();
+            }
+        });
+
         return view;
     }
 

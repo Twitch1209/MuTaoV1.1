@@ -72,7 +72,6 @@ public class HomeFragment extends BaseFragment {
 
     public PhotoCallBack callBack;
     public String path = "";
-    private String upload_api = "http://47.103.21.70";
     public Uri photoUri;
     private File file;
 

@@ -3,6 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -18,6 +19,20 @@
             android:layout_marginBottom="8dp"
             android:clipChildren="false"
             android:orientation="horizontal">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/back_btn"
+                app:backgroundTint="@android:color/white"
+                app:fabSize="mini"
+                app:rippleColor="#225BC9FA"/>
 
         </RelativeLayout>
 
