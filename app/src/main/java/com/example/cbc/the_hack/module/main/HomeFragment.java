@@ -29,13 +29,20 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cbc.library.base.BaseFragment;
+import com.example.cbc.the_hack.common.config.Api;
+import com.example.cbc.the_hack.common.okhttp.OkUtil;
+import com.example.cbc.the_hack.common.okhttp.ResultCallback;
 import com.example.cbc.the_hack.common.util.SPUtil;
+import com.example.cbc.the_hack.entity.CommonResponse;
+import com.example.cbc.the_hack.entity.NewPoem;
 import com.example.cbc.the_hack.module.callback.PhotoCallBack;
 import com.example.cbc.the_hack.module.util.FileUtils;
 import com.example.cbc.the_hack.module.util.NaviDebug;
 import com.example.cbc.the_hack.module.util.OkHttp3Util;
 import com.example.cbc.the_hack.module.view.AlertView;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
@@ -43,6 +50,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,7 +81,6 @@ public class HomeFragment extends BaseFragment {
 
     public PhotoCallBack callBack;
     public String path = "";
-    private String upload_api = "http://47.103.21.70";
     public Uri photoUri;
     private File file;
 
@@ -143,59 +151,39 @@ public class HomeFragment extends BaseFragment {
 
     private void uploadPicture() throws IOException {
 
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, CardFragment.newInstance(
-                        "[{\"title\":\"a\"}]")).commit();
-//        if (path.equals("")) {
-//            Toast.makeText(this.getContext(), "未传入图片", Toast.LENGTH_LONG).show();
-//            return;
-//        }
-//        File file = new File(path);
-//        HashMap<String, String> map = new HashMap<>();
-//        map.put("token", "1234");
-//        Log.d("---", "uploadPicture: 22222");
-//
-//        progressView.setVisibility(View.VISIBLE);
-//        photoButton.setClickable(false);
-//
-//
-//        OkHttp3Util.uploadFile(upload_api, file, "hhhhh.jpg", map, new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                Log.e("+++", "onFailure: " + e.getMessage());
-//                e.printStackTrace();
-//                getActivity().runOnUiThread(() -> {
-//                    progressView.setVisibility(View.GONE);
-//                    photoButton.setClickable(true);
-//                    Toast.makeText(context, "服务器无响应!请稍后再试!", Toast.LENGTH_LONG).show();
-//                });
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, final Response response) throws IOException {
-//
-//                if (response.isSuccessful()) {
-//                    getActivity().runOnUiThread(() -> {
-//                        progressView.setVisibility(View.GONE);
-//                        photoButton.setClickable(true);
-//                    });
-//                    String s = response.body().toString();
-//                    getActivity().getSupportFragmentManager().beginTransaction()
-//                            .replace(R.id.fragment_container, CardFragment.newInstance(s)).commit();
-//                } else {
-//                    Looper.prepare();
-//                    Toast.makeText(context, "服务器无响应!请稍后再试!", Toast.LENGTH_LONG).show();
-//                    String log = response.body().toString();
-//                    NaviDebug naviDebug = NaviDebug.getInstance();
-//                    naviDebug.saveLog(log);
-//                    getActivity().runOnUiThread(() -> {
-//                        progressView.setVisibility(View.GONE);
-//                        photoButton.setClickable(true);
-//                    });
-//                    Looper.loop();
-//                }
-//            }
-//        });
+        if (path.equals("")) {
+            Toast.makeText(this.getContext(), "未传入图片", Toast.LENGTH_LONG).show();
+            return;
+        }
+        File file = new File(path);
+        progressView.setVisibility(View.VISIBLE);
+        photoButton.setClickable(false);
+        OkUtil.post()
+                .url(Api.imageToPoem)
+                .addFile("file", file)
+                .execute(new ResultCallback<CommonResponse>() {
+                    @Override
+                    public void onSuccess(CommonResponse response) {
+                        String code = response.getCode();
+                        switch (code){
+                            case "200":
+                                uploadImageSuccess();
+                                Gson gson = new Gson();
+                                String s=gson.toJson((List<NewPoem>)response.getData());
+                                getActivity().getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.fragment_container, CardFragment.newInstance(s)).commit();
+                                break;
+                            default:
+                                uploadImageFailure();
+                                return;
+                        }
+                    }
+
+                    @Override
+                    public void onError(Call call, Exception e) {
+                        uploadImageFailure();
+                    }
+                });
     }
 
     private void changeAvater() {
@@ -238,16 +226,12 @@ public class HomeFragment extends BaseFragment {
                         }
                     } else if (position == 1) {
                         // 拍照
-                        Log.d("hei", "Here: *************0");
                         if (checkPermission(CAMERA_PERMISSION)) {
-                            Log.d("hei", "Here: *************1");
                             photo();
                         } else {//申请拍照权限和读取权限
-                            Log.d("hei", "Here: *************2");
                             startRequestPhotoPermision();
                         }
                     } else if (position == 2) {
-                        Log.d("hei", "Here: *************3");
                         uploadPicture();
                     }
                 }).show();
@@ -369,6 +353,16 @@ public class HomeFragment extends BaseFragment {
                 }
                 break;
         }
+    }
+
+    private void uploadImageSuccess(){
+        progressView.setVisibility(View.GONE);
+        photoButton.setClickable(true);
+    }
+    private void uploadImageFailure(){
+        progressView.setVisibility(View.GONE);
+        photoButton.setClickable(true);
+        showToast("服务器无响应!请稍后再试!");
     }
 
     private void startPhotoZoom(Uri uri) {

@@ -13,6 +13,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.TextView;
 
 import com.example.cbc.library.base.BaseFragment;
+import com.example.cbc.the_hack.entity.NewPoem;
 import com.example.cbc.the_hack.entity.Poem;
 import com.example.cbc.the_hack.module.adapter.CardStackAdapter;
 import com.google.gson.Gson;
@@ -42,14 +43,14 @@ public class CardFragment extends BaseFragment implements CardStackListener {
     private CardStackLayoutManager manager;
     private CardStackAdapter adapter;
     private boolean isReceived = false;
-    private List<Poem> poemList = new ArrayList<>();
+    private List<NewPoem> poemList = new ArrayList<>();
 
     public CardFragment(String response) {
         JsonParser parser = new JsonParser();
         JsonArray array = parser.parse(response).getAsJsonArray();
         if (array != null) {
             for (JsonElement poem : array) {
-                poemList.add(new Gson().fromJson(poem, Poem.class));
+                poemList.add(new Gson().fromJson(poem, NewPoem.class));
             }
             isReceived = true;
         }

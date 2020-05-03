@@ -40,6 +40,10 @@ public class Api {
     }
 
     /**
+     * 画中有诗
+     */
+    public static String imageToPoem = baseUrl + "/search-service/search/poem";
+    /**
      * 用户注册
      */
     public static String userRegister = baseUrl + "/user-service/register";

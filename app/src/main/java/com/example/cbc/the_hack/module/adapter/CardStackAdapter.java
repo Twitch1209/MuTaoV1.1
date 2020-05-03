@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cbc.the_hack.entity.NewPoem;
 import com.example.cbc.the_hack.entity.Poem;
 
 import java.util.List;
@@ -20,9 +21,9 @@ import me.cl.lingxi.R;
  */
 public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.ViewHolder> {
 
-    private List<Poem> poems;
+    private List<NewPoem> poems;
 
-    public CardStackAdapter(List<Poem> poems) {
+    public CardStackAdapter(List<NewPoem> poems) {
         this.poems = poems;
     }
 
@@ -36,11 +37,11 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         int circular = position % poems.size();
-        Poem poem = poems.get(circular);
-        holder.title.setText(poem.getTitle());
-        holder.dynasty.setText(poem.getDynasty());
-        holder.author.setText(poem.getAuthor());
-        holder.body.setText(poem.getBody());
+        NewPoem poem = poems.get(circular);
+        holder.title.setText(poem.getPoetryName());
+        holder.dynasty.setText(poem.getPoetryDynasty());
+        holder.author.setText(poem.getPoetryAuthor());
+        holder.body.setText(poem.getPoetryBody());
     }
 
     @Override
