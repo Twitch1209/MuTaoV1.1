@@ -3,6 +3,7 @@ package com.example.cbc.the_hack.module.member;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -109,27 +110,24 @@ public class RegisterActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Result<UserInfo> response) {
                         String code = response.getCode();
+                        String message = response.getMsg();
                         switch (code) {
                             case "200":
                                 showToast(R.string.toast_reg_success);
                                 UserInfo user = response.getData();
+                                Log.d("ApiData:",user.toString());
                                 SPUtil.build().putString(Constants.SP_USER_NAME, user.getUsername());
                                 onBackPressed();
                                 break;
-                            case "00105":
-                                showToast(R.string.toast_phone_being);
-                                break;
-                            case "00106":
-                                showToast(R.string.toast_username_being);
-                                break;
                             default:
-                                showToast(R.string.toast_reg_error);
+                                showToast(message);
                                 break;
                         }
                     }
 
                     @Override
                     public void onError(Call call, Exception e) {
+                        Log.d("ApiTest:",e.getMessage());
                         showToast(R.string.toast_reg_error);
                     }
                 });

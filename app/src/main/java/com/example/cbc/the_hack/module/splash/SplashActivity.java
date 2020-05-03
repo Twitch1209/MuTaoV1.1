@@ -14,6 +14,7 @@ import com.example.cbc.the_hack.common.config.Constants;
 import com.example.cbc.the_hack.common.okhttp.OkUtil;
 import com.example.cbc.the_hack.common.okhttp.ResultCallback;
 import com.example.cbc.the_hack.common.result.ResultConstant;
+import com.example.cbc.the_hack.common.result.TokenResult;
 import com.example.cbc.the_hack.common.util.SPUtil;
 import com.example.cbc.the_hack.common.result.Result;
 import com.example.cbc.the_hack.module.main.MainActivity;
@@ -53,7 +54,7 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void run() {
                 if (isLogin && !tokenNull) {
-                    getUnRead();
+                    refreshToken();
                 } else {
                     goLogin();
                 }
@@ -61,11 +62,34 @@ public class SplashActivity extends BaseActivity {
         }, 1500);
     }
 
+    public void refreshToken(){
+        OkUtil.post()
+                .url(Api.refreshToken)
+                .addParam("grant_type", "refresh_token")
+                .addParam("refresh_token", SPUtil.build().getString(Api.X_REFRESH_TOKEN))
+                .addHeader("Authorization","Basic YW5kcm9pZDpzZWNyZXQ=")
+                .execute(new ResultCallback<TokenResult>() {
+                    @Override
+                    public void onSuccess(TokenResult response) {
+                        SPUtil.build().putString(Api.X_APP_TOKEN, response.getAccess_token());
+                        SPUtil.build().putString(Api.X_REFRESH_TOKEN, response.getRefresh_token());
+                        OkUtil.newInstance().addCommonHeader(Api.X_APP_TOKEN, "bearer " + response.getAccess_token());
+                        getUnRead();
+                    }
+
+                    @Override
+                    public void onError(Call call, Exception e) {
+                        showToast(R.string.toast_refresh_error);
+                        goLogin();
+                    }
+                });
+    }
+
     /**
      * 获取未读条数
      */
     public void getUnRead() {
-        String userId = SPUtil.build().getString(Constants.SP_USER_ID);
+        Integer userId = SPUtil.build().getInt(Constants.SP_USER_ID);
         OkUtil.post()
                 .url(Api.unreadComment)
                 .addParam("uid", userId)

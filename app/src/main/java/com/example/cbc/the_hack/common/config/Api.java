@@ -11,12 +11,14 @@ public class Api {
     /**
      * token
      */
-    public static final String X_APP_TOKEN = "X-App-Token";
+    public static final String X_APP_TOKEN = "Authorization";
+    public static final String X_REFRESH_TOKEN = "refresh_token";
 
     /**
      * 收束gradle的flavor控制，将url变量在此接管
      */
-    private static String baseUrl = "http://47.100.245.128/lingxi";
+    private static String baseUrl = "http://10.0.2.2:10087";
+    private static String imageBase = "https://sm.ms/api/v2/upload";
     public static String rssUrl = "http://47.100.245.128/rss/lingxi";
 
     static {
@@ -38,25 +40,41 @@ public class Api {
     }
 
     /**
+     * 画中有诗
+     */
+    public static String imageToPoem = baseUrl + "/search-service/search/poem";
+    /**
      * 用户注册
      */
-    public static String userRegister = baseUrl + "/user/register";
+    public static String userRegister = baseUrl + "/user-service/register";
     /**
      * 用户登录
      */
-    public static String userLogin = baseUrl + "/user/login";
+    public static String userLogin = baseUrl + "/oauth-service/oauth/token";
     /**
      * 重置密码
      */
-    public static String resetPassword = baseUrl + "/user/reset";
+    public static String resetPassword = baseUrl + "/user-service/reset-password";
+    /**
+     * 用户注册
+     */
+    public static String refreshToken = baseUrl + "/oauth-service/oauth/token";
     /**
      * 更新用户信息
      */
-    public static String updateUser = baseUrl + "/user/update";
+    public static String updateUser = baseUrl + "/user-service/update-user";
     /**
-     * 获取用户信息
+     * 获取用户信息username
      */
-    public static String userInfo = baseUrl + "/user/info";
+    public static String userInfo = baseUrl + "/user-service/get-user-username";
+    /**
+     * 获取用户信息uid,不加密手机号
+     */
+    public static String userInfoUidMidSecurity = baseUrl + "/user-service/get-user-uid-m";
+    /**
+     * 获取用户信息uid
+     */
+    public static String userInfoUid = baseUrl + "/user-service/get-user-uid";
     /**
      * 查询用户信息
      */
@@ -112,7 +130,7 @@ public class Api {
     /**
      * 上传用户图片
      */
-    public static String uploadUserImage = baseUrl + "/rss/upload/user/image";
+    public static String uploadUserImage = imageBase;
     /**
      * 上传动态图片
      */
@@ -120,11 +138,11 @@ public class Api {
     /**
      * 未读条数
      */
-    public static String unreadComment = baseUrl + "/comment/get-unread";
+    public static String unreadComment = baseUrl + "/society-service/comment/get-unread";
     /**
      * 更新未读为已读
      */
-    public static String updateUnread = baseUrl + "/comment/unread-update";
+    public static String updateUnread = baseUrl + "/society-service/comment/unread-update";
     /**
      * 保存写给未来
      */

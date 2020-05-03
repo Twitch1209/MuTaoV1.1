@@ -9,7 +9,7 @@ def library = rootProject.ext.dependencies
 
 android {
     compileSdkVersion configInfo.compileSdkVersion
-
+    compileOptions.encoding = "UTF-8"
     defaultConfig {
         applicationId "me.cl.lingxi"
         minSdkVersion configInfo.minSdkVersion

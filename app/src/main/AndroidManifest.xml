@@ -28,8 +28,10 @@
 
         <activity
             android:name="com.example.cbc.the_hack.module.splash.SplashActivity"
-            android:theme="@style/AppTheme.Fullscreen"></activity>
-        <activity android:name="com.example.cbc.the_hack.module.member.LoginActivity" />
+            android:theme="@style/AppTheme.Fullscreen">
+        </activity>
+        <activity android:name="com.example.cbc.the_hack.module.member.LoginActivity" >
+        </activity>
         <activity
             android:name="com.example.cbc.the_hack.module.member.RegisterActivity"
             android:launchMode="singleTop" />
@@ -39,10 +41,8 @@
         <activity
             android:name="com.example.cbc.the_hack.module.main.MainActivity"
             android:screenOrientation="portrait">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

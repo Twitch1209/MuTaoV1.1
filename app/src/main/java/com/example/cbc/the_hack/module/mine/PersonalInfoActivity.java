@@ -21,6 +21,7 @@ import com.example.cbc.the_hack.common.util.ImageUtil;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +34,7 @@ import com.example.cbc.the_hack.common.okhttp.ResultCallback;
 import com.example.cbc.the_hack.common.result.Result;
 import com.example.cbc.the_hack.common.util.SPUtil;
 import com.example.cbc.the_hack.dialog.EditTextDialog;
+import com.example.cbc.the_hack.entity.ImageResponseEntity;
 import com.example.cbc.the_hack.entity.UserInfo;
 import me.iwf.photopicker.PhotoPicker;
 import me.iwf.photopicker.PhotoPreview;
@@ -51,10 +53,12 @@ public class PersonalInfoActivity extends BaseActivity {
     ImageView mPersonImg;
     @BindView(R.id.person_name)
     TextView mPersonName;
-    @BindView(R.id.user_signature)
+    @BindView(R.id.person_signature)
     TextView mUserSignature;
+    @BindView(R.id.person_sex)
+    TextView mUserSex;
 
-    private String mUserId;
+    private Integer mUserId;
     private String saveName;
     private String mImagePath;
 
@@ -62,9 +66,9 @@ public class PersonalInfoActivity extends BaseActivity {
 
     // 用户更新的参数
     private String username;
-    private String avatar;
+    private String phone;
     private Integer sex;
-    private String qq;
+    private String avatar;
     private String signature;
 
     // 是否为更新头像
@@ -92,13 +96,13 @@ public class PersonalInfoActivity extends BaseActivity {
             MoeToast.makeText(this, R.string.egg_who_is_there);
         }
 
-        mUserId = SPUtil.build().getString(Constants.SP_USER_ID);
+        mUserId = SPUtil.build().getInt(Constants.SP_USER_ID);
         saveName = SPUtil.build().getString(Constants.SP_USER_NAME);
         mPersonName.setText(saveName);
         postUserInfo();
     }
 
-    @OnClick({R.id.person_img, R.id.person_name})
+    @OnClick({R.id.person_img, R.id.person_name,R.id.person_sex,R.id.person_signature})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.person_img:
@@ -109,16 +113,65 @@ public class PersonalInfoActivity extends BaseActivity {
                         .setPreviewEnabled(false)
                         .start(PersonalInfoActivity.this, PhotoPicker.REQUEST_CODE);
                 break;
-            case R.id.person_name:
-                EditTextDialog editTextDialog = EditTextDialog.newInstance("修改用户名", saveName, 24);
-                editTextDialog.show(getSupportFragmentManager(), "edit");
-                editTextDialog.setPositiveListener(new EditTextDialog.PositiveListener() {
+            case R.id.person_sex:
+                String sexValue;
+                if(sex==-1){
+                    sexValue = this.getString(R.string.hint_confidential);
+                }else if(sex==0){
+                    sexValue = this.getString(R.string.user_value_female);
+                }else {
+                    sexValue = this.getString(R.string.user_value_male);
+                }
+                EditTextDialog sexDialog = EditTextDialog.newInstance("修改性别", sexValue, 20);
+                sexDialog.show(getSupportFragmentManager(), "editSex");
+                sexDialog.setPositiveListener(new EditTextDialog.PositiveListener() {
                     @Override
                     public void Positive(String value) {
-                        if (!TextUtils.isEmpty(value) && value.length() > 4 && !saveName.equals(value)) {
-                            showToast("暂不支持修改用户名");
-                            username = null;
+                        if (value.equals(getResources().getString(R.string.user_value_female))
+                                ||value.equals(getResources().getString(R.string.user_value_male))
+                                ||value.equals(getResources().getString(R.string.hint_confidential))) {
+                            setSex(value);
+                            if(value.equals(getResources().getString(R.string.user_value_female))){
+                                sex = 0;
+                            }else if (value.equals(getResources().getString(R.string.user_value_male))){
+                                sex = 1;
+                            }else {
+                                sex =-1;
+                            }
+                            postUpdateUserInfo();
                         }
+                        else {
+                            showToast("错误的格式");
+                        }
+                    }
+                });
+                break;
+            case R.id.person_name:
+                EditTextDialog usernameDialog = EditTextDialog.newInstance("修改用户名", saveName, 20);
+                usernameDialog.show(getSupportFragmentManager(), "editUserName");
+                usernameDialog.setPositiveListener(new EditTextDialog.PositiveListener() {
+                    @Override
+                    public void Positive(String value) {
+                        if (!TextUtils.isEmpty(value) && !saveName.equals(value)) {
+                            username = value;
+                            setName(value);
+                            postUpdateUserInfo();
+                            SPUtil.build().putString(Constants.SP_USER_NAME,username);
+                        }else{
+                            showToast("错误的格式");
+                        }
+                    }
+                });
+                break;
+            case R.id.person_signature:
+                EditTextDialog signatureDialog = EditTextDialog.newInstance("修改签名", signature, 50);
+                signatureDialog.show(getSupportFragmentManager(), "editSignature");
+                signatureDialog.setPositiveListener(new EditTextDialog.PositiveListener() {
+                    @Override
+                    public void Positive(String value) {
+                        setSignature(value);
+                        signature = value==null?"":value;
+                        postUpdateUserInfo();
                     }
                 });
                 break;
@@ -164,9 +217,9 @@ public class PersonalInfoActivity extends BaseActivity {
      * 获取用户信息
      */
     private void postUserInfo() {
-        OkUtil.post()
-                .url(Api.userInfo)
-                .addParam("id", mUserId)
+        OkUtil.get()
+                .url(Api.userInfoUidMidSecurity)
+                .addUrlParams("uid", mUserId.toString())
                 .execute(new ResultCallback<Result<UserInfo>>() {
 
                     @Override
@@ -196,18 +249,27 @@ public class PersonalInfoActivity extends BaseActivity {
         }
         OkUtil.post()
                 .url(Api.uploadUserImage)
-                .addFile("file", file)
-                .execute(new ResultCallback<Result<List<String>>>() {
+                .addFile("smfile", file)
+                .addHeader("Authorization","YwuGXPC7h7E01RdwJRQW5q5LXFuDjjOX")
+                .addHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63")
+                .execute(new ResultCallback<ImageResponseEntity>() {
                     @Override
-                    public void onSuccess(Result<List<String>> response) {
+                    public void onSuccess(ImageResponseEntity response) {
                         String code = response.getCode();
-                        List<String> photos = response.getData();
-                        if (!"200".equals(code) || photos == null || photos.size() == 0) {
-                            showUserImageUpdateError();
-                            return;
+                        switch (code){
+                            case "success":
+                                Map<String,Object> photos = response.getData();
+                                avatar = (String)photos.get("url");
+                                isUpdateAvatar = true;
+                                break;
+                            case "image_repeated":
+                                avatar = response.getImages();
+                                isUpdateAvatar = true;
+                                break;
+                            default:
+                                showUserImageUpdateError();
+                                return;
                         }
-                        avatar = photos.get(0);
-                        isUpdateAvatar = true;
                         postUpdateUserInfo();
                     }
 
@@ -224,9 +286,12 @@ public class PersonalInfoActivity extends BaseActivity {
     private void postUpdateUserInfo() {
         OkUtil.post()
                 .url(Api.updateUser)
-                .addParam("id", mUserId)
+                .addParam("uid", mUserId)
                 .addParam("username", username)
-                .addParam("avatar", avatar)
+                .addParam("avatar", avatar==null?"":avatar)
+                .addParam("phone",phone)
+                .addParam("sex",sex)
+                .addParam("signature",signature==null?"":signature)
                 .execute(new ResultCallback<Result<UserInfo>>() {
 
                     @Override
@@ -260,24 +325,24 @@ public class PersonalInfoActivity extends BaseActivity {
             }
         }
 
-        ContentUtil.loadUserAvatar(mPersonImg, userInfo.getAvatar());
+        ContentUtil.loadUserAvatar(mPersonImg, userInfo.getAvatar()==null?"":userInfo.getAvatar());
+        phone = userInfo.getPhone();
+        sex = userInfo.getSex();
+        signature = userInfo.getSignature()==null?"":userInfo.getSignature();
+        username = userInfo.getUsername();
+        mUserSignature.setText(signature);
+        if(sex==0){
+            mUserSex.setText(R.string.user_value_female);
+        }
+        if(sex==1){
+            mUserSex.setText(R.string.user_value_male);
+        }
+        if(sex==-1){
 
+        }
         if (!TextUtils.isEmpty(userInfo.getUsername())) {
             mPersonName.setText(userInfo.getUsername());
         }
-
-        cleanData();
-    }
-
-    /**
-     * 清除数据
-     */
-    private void cleanData() {
-        avatar = null;
-        username = null;
-        sex = null;
-        qq = null;
-        signature = null;
     }
 
     /**
@@ -290,6 +355,24 @@ public class PersonalInfoActivity extends BaseActivity {
         sendBroadcast(intent);
     }
 
+    /**
+     * 设置性别
+     */
+    private void setSex(String value){
+        mUserSex.setText(value);
+    }
+    /**
+     * 设置昵称
+     */
+    private void setName(String value){
+        mPersonName.setText(value);
+    }
+    /**
+     * 设置昵称
+     */
+    private void setSignature(String value){
+        mUserSignature.setText(value);
+    }
     /**
      * 提示头像修改失败
      */

@@ -92,11 +92,8 @@ public class ResetPwdActivity extends BaseActivity {
                                 showToast(R.string.toast_reset_ped_success);
                                 onBackPressed();
                                 break;
-                            case "00104":
-                                showToast(R.string.toast_reset_pwd_user);
-                                break;
                             default:
-                                showToast(R.string.toast_reset_pwd_error);
+                                showToast(response.getMsg());
                                 break;
                         }
                     }

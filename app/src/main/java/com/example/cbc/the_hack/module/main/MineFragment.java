@@ -73,7 +73,7 @@ public class MineFragment extends BaseFragment {
     @BindView(R.id.action_sign_out)
     TextView mMineSignOut;
 
-    private String mUserId;
+    private Integer mUserId;
     private OperateBroadcastReceiver receiver;
 
     @Override
@@ -91,7 +91,7 @@ public class MineFragment extends BaseFragment {
                 .setTitleCenter()
                 .build();
 
-        mUserId = SPUtil.build().getString(Constants.SP_USER_ID);
+        mUserId = SPUtil.build().getInt(Constants.SP_USER_ID);
         // 获取用户信息
         postUserInfo(mUserId);
     }
@@ -122,12 +122,11 @@ public class MineFragment extends BaseFragment {
         Objects.requireNonNull(getActivity()).registerReceiver(receiver, filter);
     }
 
-    private void postUserInfo(String id) {
-        OkUtil.post()
-                .url(Api.userInfo)
-                .addParam("id", id)
+    private void postUserInfo(Integer uid) {
+        OkUtil.get()
+                .url(Api.userInfoUid)
+                .addUrlParams("uid", uid.toString())
                 .execute(new ResultCallback<Result<UserInfo>>() {
-
                     @Override
                     public void onSuccess(Result<UserInfo> response) {
                         initUser(response.getData());
@@ -145,9 +144,10 @@ public class MineFragment extends BaseFragment {
         String avatar = "";
         if (userInfo != null) {
             username = userInfo.getUsername();
-            avatar = userInfo.getAvatar();
+            avatar = userInfo.getAvatar()==null?"":userInfo.getAvatar();
         }
         mUserName.setText(username);
+        mUserDescription.setText(userInfo.getSignature()==null?"暂无签名":signatureBeautified(userInfo.getSignature()));
         ContentUtil.loadUserAvatar(mUserImg, avatar);
     }
 
@@ -258,6 +258,16 @@ public class MineFragment extends BaseFragment {
         if (activity != null) {
             activity.finish();
         }
+    }
+
+    private String signatureBeautified(String signature){
+        String result;
+        if(signature.length()>10){
+            result = signature.substring(0,11)+"...";
+        }else {
+            result = signature;
+        }
+        return result;
     }
 
 }
