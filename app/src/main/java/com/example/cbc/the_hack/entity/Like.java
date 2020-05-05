@@ -5,14 +5,14 @@ import java.io.Serializable;
 // 点赞
 public class Like implements Serializable {
 
-    private String userId;
+    private Integer userId;
     private String username;
 
-    public String getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 

@@ -60,7 +60,7 @@ public class FeedFragment extends BaseFragment {
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private String saveUid;
+    private Integer saveUid;
     private String saveUName;
 
     private List<Feed> mList = new ArrayList<>();
@@ -117,7 +117,7 @@ public class FeedFragment extends BaseFragment {
                 })
                 .build();
 
-        saveUid = SPUtil.build().getString(Constants.SP_USER_ID);
+        saveUid = SPUtil.build().getInt(Constants.SP_USER_ID);
         saveUName = SPUtil.build().getString(Constants.SP_USER_NAME);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
@@ -246,12 +246,12 @@ public class FeedFragment extends BaseFragment {
     // 获取动态列表
     private void getMoodList(int pageNum, int pageSize) {
         if (!mSwipeRefreshLayout.isRefreshing() && RefreshMODE == MOD_REFRESH) mSwipeRefreshLayout.setRefreshing(true);
-        String uid = SPUtil.build().getString(Constants.SP_USER_ID);
-        OkUtil.post()
+        Integer uid = SPUtil.build().getInt(Constants.SP_USER_ID);
+        OkUtil.get()
                 .url(Api.pageFeed)
-                .addParam("uid", uid)
-                .addParam("pageNum", pageNum)
-                .addParam("pageSize", pageSize)
+                .addUrlParams("uid", uid.toString())
+                .addUrlParams("pageNum", String.valueOf(pageNum))
+                .addUrlParams("pageSize", String.valueOf(pageSize))
                 .execute(new ResultCallback<Result<PageInfo<Feed>>>() {
                     @Override
                     public void onSuccess(Result<PageInfo<Feed>> response) {

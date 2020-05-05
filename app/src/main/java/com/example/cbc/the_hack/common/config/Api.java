@@ -86,7 +86,7 @@ public class Api {
     /**
      * 动态列表
      */
-    public static String pageFeed = baseUrl + "/post/page";
+    public static String pageFeed = baseUrl + "/society-service/post/page";
     /**
      * 用户个人动态列表
      */
@@ -94,35 +94,35 @@ public class Api {
     /**
      * 发布动态
      */
-    public static String saveFeed = baseUrl + "/post/publish";
+    public static String saveFeed = baseUrl + "/society-service/post/publish";
     /**
      * 查看动态
      */
-    public static String viewFeed = baseUrl + "/post/view";
+    public static String viewFeed = baseUrl + "/society-service/post/view";
     /**
      * 与我相关
      */
-    public static String relevant = baseUrl + "/post/related";
+    public static String relevant = baseUrl + "/society-service/post/related";
     /**
      * 我的回复
      */
-    public static String mineReply = baseUrl + "/post/my-reply";
+    public static String mineReply = baseUrl + "/society-service/post/my-reply";
     /**
      * 新增动态操作,如点赞
      */
-    public static String saveAction = baseUrl + "/post-action/add";
+    public static String saveAction = baseUrl + "/society-service/post-action/add";
     /**
      * 移除动态操作,如取消赞
      */
-    public static String removeAction = baseUrl + "/post-action/delete";
+    public static String removeAction = baseUrl + "/society-service/post-action/delete";
     /**
      * 动态评论列表
      */
-    public static String pageComment = baseUrl + "/comment/page";
+    public static String pageComment = baseUrl + "/society-service/comment/page";
     /**
      * 新增动态评论
      */
-    public static String saveComment = baseUrl + "/comment/publish";
+    public static String saveComment = baseUrl + "/society-service/comment/publish";
     /**
      * 获取最新app版本
      */

@@ -252,6 +252,7 @@ public class PersonalInfoActivity extends BaseActivity {
                 .addFile("smfile", file)
                 .addHeader("Authorization","YwuGXPC7h7E01RdwJRQW5q5LXFuDjjOX")
                 .addHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63")
+                .setProgressDialog(loadingProgress)
                 .execute(new ResultCallback<ImageResponseEntity>() {
                     @Override
                     public void onSuccess(ImageResponseEntity response) {
@@ -324,8 +325,8 @@ public class PersonalInfoActivity extends BaseActivity {
                 Log.d(TAG, "setUserInfo: delete file " + delete);
             }
         }
-
-        ContentUtil.loadUserAvatar(mPersonImg, userInfo.getAvatar()==null?"":userInfo.getAvatar());
+        avatar = userInfo.getAvatar()==null?"":userInfo.getAvatar();
+        ContentUtil.loadUserAvatar(mPersonImg, avatar);
         phone = userInfo.getPhone();
         sex = userInfo.getSex();
         signature = userInfo.getSignature()==null?"":userInfo.getSignature();

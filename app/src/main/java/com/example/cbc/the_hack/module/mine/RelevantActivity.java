@@ -46,7 +46,7 @@ public class RelevantActivity extends BaseActivity {
 
     private RelevantAdapter mAdapter;
     private LoadingDialog loadingProgress;
-    private String saveId;
+    private Integer saveId;
     private List<Relevant> mRelevantList = new ArrayList<>();
 
     @Override
@@ -91,7 +91,7 @@ public class RelevantActivity extends BaseActivity {
                 .setTitleCenter(R.style.AppTheme_Toolbar_TextAppearance)
                 .build();
 
-        saveId = SPUtil.build().getString(Constants.SP_USER_ID);
+        saveId = SPUtil.build().getInt(Constants.SP_USER_ID);
         loadingProgress = new LoadingDialog(this, R.string.dialog_loading);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -124,7 +124,7 @@ public class RelevantActivity extends BaseActivity {
      * 更新未读条数
      */
     public void updateUnread() {
-        String userId = SPUtil.build().getString(Constants.SP_USER_ID);
+        Integer userId = SPUtil.build().getInt(Constants.SP_USER_ID);
         OkUtil.post()
                 .url(Api.updateUnread)
                 .addParam("uid", userId)
@@ -145,11 +145,11 @@ public class RelevantActivity extends BaseActivity {
     public void getRelevantList(String url) {
         Integer pageNum = 1;
         Integer pageSize = 20;
-        OkUtil.post()
+        OkUtil.get()
                 .url(url)
-                .addParam("uid", saveId)
-                .addParam("pageNum", pageNum)
-                .addParam("pageSize", pageSize)
+                .addUrlParams("uid", saveId.toString())
+                .addUrlParams("pageNum", pageNum.toString())
+                .addUrlParams("pageSize", pageSize.toString())
                 .setLoadDelay()
                 .setProgressDialog(loadingProgress)
                 .execute(new ResultCallback<Result<PageInfo<Relevant>>>() {

@@ -62,7 +62,7 @@ public class PublishActivity extends BaseActivity {
     private PhotoSelAdapter mPhotoSelAdapter;
     private List<String> mPhotos = new ArrayList<>();
 
-    private String mUid;
+    private Integer mUid;
     private String mInfo = "";
 
     @Override
@@ -80,7 +80,7 @@ public class PublishActivity extends BaseActivity {
                 .setTitleCenter(R.style.AppTheme_Toolbar_TextAppearance)
                 .build();
 
-        mUid = SPUtil.build().getString(Constants.SP_USER_ID);
+        mUid = SPUtil.build().getInt(Constants.SP_USER_ID);
         setLoading("发布中...");
         initRecycleView();
     }
