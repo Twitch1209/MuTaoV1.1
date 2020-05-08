@@ -3,6 +3,7 @@ package com.example.cbc.the_hack.module.feed;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.ImageView;
 
 import androidx.appcompat.widget.AppCompatEditText;
@@ -13,34 +14,33 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cbc.library.base.BaseActivity;
 import com.example.cbc.library.util.ToolbarUtil;
 import com.example.cbc.the_hack.adapter.PhotoSelAdapter;
-import com.example.cbc.the_hack.common.util.ImageUtil;
-
-import java.io.File;
-import java.io.IOException;
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import me.cl.lingxi.R;
-
 import com.example.cbc.the_hack.common.config.Api;
 import com.example.cbc.the_hack.common.config.Constants;
 import com.example.cbc.the_hack.common.okhttp.OkUtil;
 import com.example.cbc.the_hack.common.okhttp.ResultCallback;
 import com.example.cbc.the_hack.common.result.Result;
+import com.example.cbc.the_hack.common.util.ImageUtil;
 import com.example.cbc.the_hack.common.util.SPUtil;
 import com.example.cbc.the_hack.entity.Feed;
 import com.example.cbc.the_hack.module.main.MainActivity;
 
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.TimeUnit;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import me.cl.lingxi.R;
 import me.iwf.photopicker.PhotoPicker;
 import me.iwf.photopicker.PhotoPreview;
 import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -64,6 +64,8 @@ public class PublishActivity extends BaseActivity {
 
     private Integer mUid;
     private String mInfo = "";
+
+    private Integer photoNum = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,45 +157,78 @@ public class PublishActivity extends BaseActivity {
 
         // 压缩图片
         photos = ImageUtil.compressorImage(this, photos);
-        List<String> photoUrlList = new ArrayList<>();
+        CopyOnWriteArrayList<String> photoUrlList = new CopyOnWriteArrayList<>();
         OkHttpClient client = new OkHttpClient.Builder()
-                .readTimeout(5, TimeUnit.SECONDS).build();
-        boolean oneFail = false;
+                .readTimeout(10, TimeUnit.SECONDS)
+                .build();
+        photoNum = photos.size();
 
-        for (File photoFile: ImageUtil.pathToImageFile(photos)) {
+        for (File photoFile : ImageUtil.pathToImageFile(photos)) {
+            Log.e(TAG, "postUpload: start one upload");
             RequestBody requestBody = new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
-                    .addFormDataPart("smfile", "image",
+                    .addFormDataPart("smfile", photoFile.getName(),
                             RequestBody.create(MediaType.parse("image/*"), photoFile))
                     .build();
             Request request = new Request.Builder()
                     .url("https://sm.ms/api/v2/upload")
+                    .addHeader("User-Agent", "Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405")
                     .addHeader("Content-Type", "multipart/form-data")
                     .addHeader("Authorization", "ZNtF4YN9va6lBsSKpg31PKlkOCZIcEsC")
                     .post(requestBody)
                     .build();
-            try {
-                Response response = client.newCall(request).execute();
-                if (response.code() == 200) {
-                    JSONObject jsonObject = new JSONObject(response.body().string());
-                    JSONObject data = jsonObject.getJSONObject("data");
-                    photoUrlList.add(data.getString("url"));
-                } else {
-                    oneFail = true;
-                    break;
+            Call call = client.newCall(request);
+            call.enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.d(TAG, "onFailure: " + e);
+                    showToast("图片上传失败");
+                    addPhotoAdd(mPhotos);
                 }
-            } catch (Exception e) {
-                oneFail = true;
-                break;
+
+                @Override
+                public void onResponse(Call call, Response response) {
+                    try {
+                        Log.d(TAG, "onResponse: " + response.code());
+                        if (response.code() == 200) {
+                            JSONObject jsonObject = new JSONObject(response.body().string());
+                            if (jsonObject.getBoolean("success")) {
+                                JSONObject data = jsonObject.getJSONObject("data");
+                                Log.d(TAG, "onResponse: url: " + data.getString("url"));
+                                photoUrlList.add(data.getString("url"));
+                                if (photoUrlList.size() == photoNum) {
+                                    showToast("图片上传成功");
+                                    postSaveFeed(photoUrlList);
+                                }
+                            } else if (!jsonObject.getBoolean("success") &&
+                                    jsonObject.getString("code").equals("image_repeated")){
+                                Log.d(TAG, "onResponse: url: " + jsonObject.getString("images"));
+                                photoUrlList.add(jsonObject.getString("images"));
+                                if (photoUrlList.size() == photoNum) {
+                                    Log.d(TAG, "onResponse: start publish");
+                                    showToast("图片上传成功");
+                                    postSaveFeed(photoUrlList);
+                                }
+                            }
+                        } else {
+                            showToast("图片上传失败");
+                            addPhotoAdd(mPhotos);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        showToast("图片上传失败");
+                        addPhotoAdd(mPhotos);
+                    }
+                }
+            });
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
-        if (oneFail) {
-            showToast("图片上传失败");
-            addPhotoAdd(mPhotos);
-        } else {
-            postSaveFeed(photoUrlList);
-        }
-    }
+
+}
 
     // 发布动态
     private void postSaveFeed(List<String> uploadImg) {
