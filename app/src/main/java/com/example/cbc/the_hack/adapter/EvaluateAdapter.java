@@ -23,6 +23,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.cl.lingxi.R;
 
+import com.example.cbc.the_hack.common.util.DateUtil;
 import com.example.cbc.the_hack.entity.Comment;
 import com.example.cbc.the_hack.entity.Reply;
 import com.example.cbc.the_hack.entity.User;
@@ -136,7 +137,7 @@ public class EvaluateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ContentUtil.loadUserAvatar(mUserImg, user.getAvatar());
 
             mUserName.setText(user.getUsername());
-            mEvaluateTime.setText(comment.getCreateTime());
+            mEvaluateTime.setText(DateUtil.showTimeRealFormat(comment.getCreateTime()));
             mEvaluateInfo.setText(comment.getCommentInfo());
             ReplyAdapter adapter = new ReplyAdapter(context, comment.getReplyList());
             mRecyclerView.setAdapter(adapter);

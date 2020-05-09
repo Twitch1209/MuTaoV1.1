@@ -27,10 +27,15 @@ import com.example.cbc.library.view.LoadingDialog;
 import com.example.cbc.the_hack.adapter.EvaluateAdapter;
 import com.example.cbc.the_hack.adapter.FeedAdapter;
 import com.example.cbc.the_hack.common.util.ContentUtil;
+import com.example.cbc.the_hack.common.util.DateUtil;
 import com.example.cbc.the_hack.common.util.FeedContentUtil;
 import com.example.cbc.the_hack.module.member.UserActivity;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -189,7 +194,7 @@ public class FeedActivity extends BaseActivity {
         // 动态详情
         ContentUtil.loadUserAvatar(mUserImg, user.getAvatar());
         mUserName.setText(user.getUsername());
-        mFeedTime.setText(feed.getCreateTime());
+        mFeedTime.setText(DateUtil.showTimeRealFormat(feed.getCreateTime()));
         mFeedInfo.setText(FeedContentUtil.getFeedText(feed.getFeedInfo(), mFeedInfo));
         // 查看评论点赞数
         mFeedSeeNum.setText(String.valueOf(feed.getViewNum()));
@@ -294,7 +299,7 @@ public class FeedActivity extends BaseActivity {
         OkUtil.post()
                 .url(Api.saveComment)
                 .addParam("content", comment)
-                .addParam("p_cid", feedId)
+                .addParam("pid", feedId)
                 .addParam("p_uid", toUid)
                 .addParam("type", "0")
                 .addParam("uid", uid)
@@ -346,11 +351,11 @@ public class FeedActivity extends BaseActivity {
     public void getEvaluateList(Integer feedId) {
         Integer pageNum = 1;
         Integer pageSize = 20;
-        OkUtil.post()
+        OkUtil.get()
                 .url(Api.pageComment)
-                .addParam("pid", feedId)
-                .addParam("pageNum", pageNum)
-                .addParam("pageSize", pageSize)
+                .addUrlParams("pid", feedId.toString())
+                .addUrlParams("pageNum", pageNum.toString())
+                .addUrlParams("pageSize", pageSize.toString())
                 .execute(new ResultCallback<Result<PageInfo<Comment>>>() {
                     @Override
                     public void onSuccess(Result<PageInfo<Comment>> response) {

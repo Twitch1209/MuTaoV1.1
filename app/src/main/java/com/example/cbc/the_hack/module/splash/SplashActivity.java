@@ -90,9 +90,9 @@ public class SplashActivity extends BaseActivity {
      */
     public void getUnRead() {
         Integer userId = SPUtil.build().getInt(Constants.SP_USER_ID);
-        OkUtil.post()
+        OkUtil.get()
                 .url(Api.unreadComment)
-                .addParam("uid", userId)
+                .addUrlParams("uid", userId.toString())
                 .execute(new ResultCallback<Result<Integer>>() {
                     @Override
                     public void onSuccess(Result<Integer> response) {

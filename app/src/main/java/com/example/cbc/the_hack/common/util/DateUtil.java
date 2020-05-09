@@ -1,5 +1,6 @@
 package com.example.cbc.the_hack.common.util;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,6 +10,21 @@ import java.util.Locale;
  * 时间换算类
  */
 public class DateUtil {
+    /**
+     * 返回格式化的时间
+     * @param dateString 时间
+     * @return 格式化的时间（月 日 年 时分秒）
+     */
+    public static String showTimeRealFormat(String dateString){
+        DateFormat df = DateFormat.getDateTimeInstance();
+        Date date = null;
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSSZ").parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return df.format(date);
+    }
 
     /**
      * 显示时间，如果与当前时间差别小于一天，则自动用**秒(分，小时)前，

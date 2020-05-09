@@ -17,7 +17,11 @@ import com.example.cbc.the_hack.common.util.ContentUtil;
 import com.example.cbc.the_hack.common.util.DateUtil;
 import com.example.cbc.the_hack.common.util.FeedContentUtil;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -169,7 +173,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindItem(Feed feed, int position) {
+        public void bindItem(Feed feed, int position){
             mFeed = feed;
             mPosition = position;
             User user = feed.getUser();
@@ -178,7 +182,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ContentUtil.loadUserAvatar(mUserImg, user.getAvatar());
 
             mUserName.setText(user.getUsername());
-            mFeedTime.setText(DateUtil.showTime(feed.getCreateTime()));
+            mFeedTime.setText(DateUtil.showTimeRealFormat(feed.getCreateTime()));
             mFeedInfo.setText(FeedContentUtil.getFeedText(feed.getFeedInfo(), mFeedInfo));
             // 图片
             final List<String> photos = feed.getPhotoList();

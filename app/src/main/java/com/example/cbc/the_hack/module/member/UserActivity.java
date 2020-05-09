@@ -70,10 +70,13 @@ public class UserActivity extends BaseActivity {
     TextView mContact;
     @BindView(R.id.feed_num)
     TextView mFeedNum;
+    @BindView(R.id.signature)
+    TextView mSignature;
 
     private boolean isPostUser = true;
-    private String saveUserId;
-    private String mUserId;
+    private Integer saveUserId;
+    private String signature;
+    private Integer mUserId;
     private String mUsername;
     private List<Feed> mFeedList = new ArrayList<>();
     private FeedAdapter mAdapter;
@@ -97,7 +100,7 @@ public class UserActivity extends BaseActivity {
                 .setBack()
                 .build();
 
-        saveUserId = SPUtil.build().getString(Constants.SP_USER_ID);
+        saveUserId = SPUtil.build().getInt(Constants.SP_USER_ID);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -132,9 +135,9 @@ public class UserActivity extends BaseActivity {
      * 搜索用户
      */
     private void postSearchUser(String username) {
-        OkUtil.post()
+        OkUtil.get()
                 .url(Api.searchUser)
-                .addParam("username", username)
+                .addUrlParams("username", username)
                 .execute(new ResultCallback<Result<UserInfo>>() {
 
                     @Override
@@ -156,8 +159,10 @@ public class UserActivity extends BaseActivity {
         boolean isRc = false;
         String avatar = "";
         if (userInfo != null) {
-            mUserId = userInfo.getId();
+            mUserId = userInfo.getUid();
             mUsername = userInfo.getUsername();
+            signature = userInfo.getSignature();
+            mSignature.setText(signature==null?"":signature);
             avatar = userInfo.getAvatar();
             if (!TextUtils.isEmpty(userInfo.getImToken())) {
                 isRc = true;
@@ -170,6 +175,7 @@ public class UserActivity extends BaseActivity {
         }
         mTitleName.setText(mUsername);
         mUserName.setText(mUsername);
+
         if (!isRc) {
             mContact.setVisibility(View.GONE);
         }
@@ -281,12 +287,12 @@ public class UserActivity extends BaseActivity {
         if (!mSwipeRefreshLayout.isRefreshing() && mRefreshMode == MODE_REFRESH) {
             mSwipeRefreshLayout.setRefreshing(true);
         }
-        OkUtil.post()
+        OkUtil.get()
                 .url(Api.pageUserFeed)
-                .addParam("pageNum", pageNum)
-                .addParam("pageSize", pageSize)
-                .addParam("searchUid", mUserId)
-                .addParam("uid", saveUserId)
+                .addUrlParams("pageNum", String.valueOf(pageNum))
+                .addUrlParams("pageSize", String.valueOf(pageSize))
+                .addUrlParams("searchUid", mUserId.toString())
+                .addUrlParams("uid", String.valueOf(saveUserId))
                 .execute(new ResultCallback<Result<PageInfo<Feed>>>() {
                     @Override
                     public void onSuccess(Result<PageInfo<Feed>> response) {

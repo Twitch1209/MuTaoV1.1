@@ -78,7 +78,7 @@ public class Api {
     /**
      * 查询用户信息
      */
-    public static String searchUser = baseUrl + "/user/search";
+    public static String searchUser = baseUrl + "/user-service/get-user-username";
     /**
      * 融云用户列表
      */
@@ -90,7 +90,7 @@ public class Api {
     /**
      * 用户个人动态列表
      */
-    public static String pageUserFeed = baseUrl + "/post/user";
+    public static String pageUserFeed = baseUrl + "/society-service/post/user";
     /**
      * 发布动态
      */
