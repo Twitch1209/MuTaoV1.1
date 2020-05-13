@@ -1,6 +1,7 @@
 package com.example.cbc.the_hack.module.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -13,9 +14,11 @@ import android.view.animation.LinearInterpolator;
 import android.widget.TextView;
 
 import com.example.cbc.library.base.BaseFragment;
+import com.example.cbc.the_hack.common.config.Constants;
 import com.example.cbc.the_hack.entity.NewPoem;
 import com.example.cbc.the_hack.entity.Poem;
 import com.example.cbc.the_hack.module.adapter.CardStackAdapter;
+import com.example.cbc.the_hack.module.feed.PublishActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -44,6 +47,7 @@ public class CardFragment extends BaseFragment implements CardStackListener {
     private CardStackAdapter adapter;
     private boolean isReceived = false;
     private List<NewPoem> poemList = new ArrayList<>();
+    private int cardPos=0;
 
     public CardFragment(String response) {
         JsonParser parser = new JsonParser();
@@ -87,6 +91,19 @@ public class CardFragment extends BaseFragment implements CardStackListener {
             }
         });
 
+        //按下按钮跳转到发布界面，并且复制古诗
+        view.findViewById(R.id.social_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PublishActivity.class);
+                int circular = cardPos % poemList.size();
+                NewPoem poem = poemList.get(circular);
+                intent.putExtra("poem",poem);
+                startActivity(intent);
+            }
+        });
+
+
         return view;
     }
 
@@ -104,6 +121,7 @@ public class CardFragment extends BaseFragment implements CardStackListener {
         manager.setOverlayInterpolator(new LinearInterpolator());
         cardStackView.setLayoutManager(manager);
         cardStackView.setAdapter(adapter);
+
     }
 
     @Override
@@ -128,7 +146,7 @@ public class CardFragment extends BaseFragment implements CardStackListener {
 
     @Override
     public void onCardAppeared(View view, int position) {
-
+        cardPos=position;
     }
 
     @Override

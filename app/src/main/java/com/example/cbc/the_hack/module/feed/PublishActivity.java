@@ -22,6 +22,7 @@ import com.example.cbc.the_hack.common.result.Result;
 import com.example.cbc.the_hack.common.util.ImageUtil;
 import com.example.cbc.the_hack.common.util.SPUtil;
 import com.example.cbc.the_hack.entity.Feed;
+import com.example.cbc.the_hack.entity.NewPoem;
 import com.example.cbc.the_hack.module.main.MainActivity;
 
 import org.json.JSONObject;
@@ -82,6 +83,14 @@ public class PublishActivity extends BaseActivity {
                 .setTitleCenter(R.style.AppTheme_Toolbar_TextAppearance)
                 .build();
 
+        NewPoem poem=new NewPoem();
+        Intent intent=getIntent();
+        poem=(NewPoem)intent.getSerializableExtra("poem");
+        if(poem!=null){
+            String poems=poem.getPoetryName()+"\n" + poem.getPoetryDynasty()+"  "
+                    +poem.getPoetryAuthor()+"\n" + poem.getPoetryBody();
+            mMoodInfo.setText(poems);
+        }
         mUid = SPUtil.build().getInt(Constants.SP_USER_ID);
         setLoading("发布中...");
         initRecycleView();
