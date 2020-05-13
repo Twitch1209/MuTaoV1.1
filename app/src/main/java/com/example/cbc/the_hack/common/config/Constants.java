@@ -37,7 +37,5 @@ public class Constants {
     // 回退标识
     public static final String GO_INDEX = "go_index";
 
-    // 服务器rss图片
-    public static final String IMG_URL = Api.rssUrl;
 
 }

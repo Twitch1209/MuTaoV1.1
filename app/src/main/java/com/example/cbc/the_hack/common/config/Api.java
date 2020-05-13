@@ -19,22 +19,18 @@ public class Api {
      */
     private static String baseUrl = "http://10.0.2.2:10087";
     private static String imageBase = "https://sm.ms/api/v2/upload";
-    public static String rssUrl = "http://47.100.245.128/rss/lingxi";
 
     static {
         String flavor = BuildConfig.FLAVOR;
         switch (flavor) {
             case "alpha":
                 baseUrl = "http://47.100.245.128/lingxi-test";
-                rssUrl = "http://47.100.245.128/rss/lingxi-test";
                 break;
             case "local":
                 baseUrl = "http://192.168.21.103:8090/lingxi";
-                rssUrl = "http://192.168.21.103/rss/lingxi-test";
                 break;
             case "online":
                 baseUrl = "http://47.100.245.128/lingxi";
-                rssUrl = "http://47.100.245.128/rss/lingxi";
                 break;
         }
     }

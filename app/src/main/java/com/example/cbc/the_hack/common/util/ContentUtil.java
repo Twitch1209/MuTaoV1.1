@@ -55,7 +55,6 @@ public class ContentUtil {
      * 加载动态图片
      */
     public static void loadFeedImage(ImageView imageView, String url) {
-        url = Constants.IMG_URL + url;
         GlideApp.with(imageView.getContext())
                 .load(url)
                 .centerCrop()
@@ -89,7 +88,6 @@ public class ContentUtil {
      * 加载模糊图片，相对路径
      */
     public static void loadRelativeBlurImage(ImageView imageView, String url) {
-        url = Constants.IMG_URL + url;
         loadBlurImage(imageView, url);
     }
 
@@ -97,7 +95,6 @@ public class ContentUtil {
      * 加载模糊图片，相对路径，模糊度最大25
      */
     public static void loadRelativeBlurImage(ImageView imageView, String url, int radius) {
-        url = Constants.IMG_URL + url;
         loadBlurImage(imageView, url, radius);
     }
 
@@ -198,7 +195,6 @@ public class ContentUtil {
                 // 拼接url
                 for (int i = 0; i < size; i++) {
                     String photo = urls.get(i);
-                    photo = Constants.IMG_URL + photo;
                     urls.set(i, photo);
                 }
                 if (mOnItemListener != null) mOnItemListener.onPhotoClick(urls, position);
