@@ -132,7 +132,7 @@ public class FeedFragment extends BaseFragment {
         mRecyclerView.setAdapter(mAdapter);
 
         initEvent();
-
+        mPage = 1;
         getMoodList(mPage, mCount);
     }
 
@@ -161,9 +161,13 @@ public class FeedFragment extends BaseFragment {
                         gotoMood(feed);
                         break;
                     case R.id.feed_like_layout:
-                        if (feed.isLike()) return;
-                        // 未点赞点赞
-                        postAddLike(feed, position);
+                        if (feed.isLike()){
+                            //取消点赞
+                            cancelLike(feed,position);
+                        }else {
+                            // 未点赞
+                            postAddLike(feed, position);
+                        }
                         break;
                 }
             }
@@ -240,6 +244,41 @@ public class FeedFragment extends BaseFragment {
                     @Override
                     public void onError(Call call, Exception e) {
                         showToast("点赞失败");
+                    }
+                });
+    }
+
+    // 点赞
+    private void cancelLike(final Feed feed, final int position) {
+        OkUtil.post()
+                .url(Api.removeAction)
+                .addParam("pid", feed.getId())
+                .addParam("uid", saveUid)
+                .addParam("type", "0")
+                .execute(new ResultCallback<Result>() {
+                    @Override
+                    public void onSuccess(Result response) {
+                        String code = response.getCode();
+                        if (!"200".equals(code)) {
+                            showToast("取消失败了，再试试吧~");
+                            return;
+                        }
+                        List<Like> likeList = new ArrayList<>(feed.getLikeList());
+                        for(int i = likeList.size()-1;i >= 0;i--){
+                            String userName = likeList.get(i).getUsername();
+                            if(userName!=null&&userName.equals(saveUName)){
+                                likeList.remove(i);
+                                break;
+                            }
+                        }
+                        feed.setLikeList(likeList);
+                        feed.setLike(false);
+                        mAdapter.updateItem(feed, position);
+                    }
+
+                    @Override
+                    public void onError(Call call, Exception e) {
+                        showToast("取消失败了，再试试吧~");
                     }
                 });
     }

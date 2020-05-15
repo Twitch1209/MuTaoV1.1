@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cbc.library.base.BaseActivity;
 import com.example.cbc.library.util.ToolbarUtil;
+import com.example.cbc.library.view.LoadingDialog;
 import com.example.cbc.the_hack.adapter.PhotoSelAdapter;
 import com.example.cbc.the_hack.common.config.Api;
 import com.example.cbc.the_hack.common.config.Constants;
@@ -68,6 +69,8 @@ public class PublishActivity extends BaseActivity {
 
     private Integer photoNum = 0;
 
+    private LoadingDialog publishProgress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +85,7 @@ public class PublishActivity extends BaseActivity {
                 .setBack()
                 .setTitleCenter(R.style.AppTheme_Toolbar_TextAppearance)
                 .build();
-
+        publishProgress = new LoadingDialog(this, R.string.dialog_publishing_post);
         NewPoem poem=new NewPoem();
         Intent intent=getIntent();
         poem=(NewPoem)intent.getSerializableExtra("poem");
@@ -163,7 +166,6 @@ public class PublishActivity extends BaseActivity {
     // 上传图片
     private void postUpload(List<String> photos) {
         removePhotoAdd(photos);
-
         // 压缩图片
         photos = ImageUtil.compressorImage(this, photos);
         CopyOnWriteArrayList<String> photoUrlList = new CopyOnWriteArrayList<>();
@@ -171,6 +173,8 @@ public class PublishActivity extends BaseActivity {
                 .readTimeout(10, TimeUnit.SECONDS)
                 .build();
         photoNum = photos.size();
+        publishProgress.setMessage(R.string.dialog_publishing_image);
+        publishProgress.show();
 
         for (File photoFile : ImageUtil.pathToImageFile(photos)) {
             Log.e(TAG, "postUpload: start one upload");
@@ -216,6 +220,7 @@ public class PublishActivity extends BaseActivity {
                                 if (photoUrlList.size() == photoNum) {
                                     Log.d(TAG, "onResponse: start publish");
                                     showToast("图片上传成功");
+                                    hideLoadingBar();
                                     postSaveFeed(photoUrlList);
                                 }
                             }
@@ -236,17 +241,19 @@ public class PublishActivity extends BaseActivity {
                 e.printStackTrace();
             }
         }
-
 }
 
     // 发布动态
     private void postSaveFeed(List<String> uploadImg) {
+        publishProgress.setMessage(R.string.dialog_publishing_post);
+        publishProgress.show();
         removePhotoAdd(uploadImg);
         OkUtil.post()
                 .url(Api.saveFeed)
                 .addParam("uid", mUid)
                 .addParam("content", mInfo)
                 .addUrlParams("imageList", uploadImg)
+                .setProgressDialog(publishProgress)
                 .execute(new ResultCallback<Result<Feed>>() {
                     @Override
                     public void onSuccess(Result<Feed> response) {
@@ -269,6 +276,7 @@ public class PublishActivity extends BaseActivity {
                         addPhotoAdd(mPhotos);
                     }
                 });
+        publishProgress.dismiss();
     }
 
     // 添加添加图片按钮
@@ -292,5 +300,9 @@ public class PublishActivity extends BaseActivity {
         intent.putExtras(bundle);
         setResult(Constants.ACTIVITY_PUBLISH, intent);
         finish();
+    }
+
+    private void hideLoadingBar(){
+        publishProgress.dismiss();
     }
 }

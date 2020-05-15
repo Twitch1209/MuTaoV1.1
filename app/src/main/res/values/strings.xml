@@ -79,6 +79,8 @@
     <string name="dialog_loading_reg">正在注册&#8230;</string>
     <string name="dialog_loading_reset_wd">正在重置密码&#8230;</string>
     <string name="dialog_loading_more">正在加载更更多&#8230;</string>
+    <string name="dialog_publishing_post">正在发布&#8230;</string>
+    <string name="dialog_publishing_image">正在上传图片&#8230;</string>
     <string name="dialog_update_avatar">修改头像中&#8230;</string>
     <string name="dialog_future_title">信件传达</string>
     <string name="dialog_future_type">传达类型</string>
@@ -114,6 +116,7 @@
     <string name="toast_again_exit">(ಥ _ ಥ)你难道要再按一次离开我么</string>
     <string name="toast_search_none">没有找到任何内容╮(╯▽╰)╭</string>
     <string name="toast_feature_dev">该功能紧张开发中</string>
+    <string name="toast_empty_content">写点什么把!</string>
 
     <!-- value -->
     <string name="user_value_female">女</string>

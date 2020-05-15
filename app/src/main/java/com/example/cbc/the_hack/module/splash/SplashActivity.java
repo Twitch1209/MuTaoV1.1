@@ -71,10 +71,16 @@ public class SplashActivity extends BaseActivity {
                 .execute(new ResultCallback<TokenResult>() {
                     @Override
                     public void onSuccess(TokenResult response) {
-                        SPUtil.build().putString(Api.X_APP_TOKEN, response.getAccess_token());
-                        SPUtil.build().putString(Api.X_REFRESH_TOKEN, response.getRefresh_token());
-                        OkUtil.newInstance().addCommonHeader(Api.X_APP_TOKEN, "bearer " + response.getAccess_token());
-                        getUnRead();
+                        if(response.getAccess_token() == null){
+                            showToast(R.string.toast_refresh_error);
+                            goLogin();
+                        }
+                        else{
+                            SPUtil.build().putString(Api.X_APP_TOKEN, response.getAccess_token());
+                            SPUtil.build().putString(Api.X_REFRESH_TOKEN, response.getRefresh_token());
+                            OkUtil.newInstance().addCommonHeader(Api.X_APP_TOKEN, "bearer " + response.getAccess_token());
+                            getUnRead();
+                        }
                     }
 
                     @Override
