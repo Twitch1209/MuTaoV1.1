@@ -15,7 +15,7 @@ import com.example.cbc.library.util.ToolbarUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.cl.lingxi.R;
+import com.example.cbc.R;
 
 public class SearchActivity extends BaseActivity {
 

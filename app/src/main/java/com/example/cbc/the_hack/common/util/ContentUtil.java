@@ -15,20 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
-import me.cl.lingxi.R;
+import com.example.cbc.R;
 import com.example.cbc.the_hack.adapter.FeedAdapter;
 import com.example.cbc.the_hack.adapter.FeedPhotoAdapter;
 import com.example.cbc.the_hack.common.config.Constants;
 import com.example.cbc.the_hack.common.glide.GlideApp;
 import com.example.cbc.the_hack.entity.Like;
 
-/**
- * author : Bafs
- * e-mail : bafs.jy@live.com
- * time   : 2018/05/29
- * desc   : 内容管理
- * version: 1.0
- */
 public class ContentUtil {
 
     /**

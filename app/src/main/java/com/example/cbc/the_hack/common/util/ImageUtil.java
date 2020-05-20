@@ -22,13 +22,6 @@ import java.util.UUID;
 
 import id.zelory.compressor.Compressor;
 
-/**
- * author : Bafs
- * e-mail : bafs.jy@live.com
- * time   : 2018/05/26
- * desc   : 图片工具类，压缩使用https://github.com/zetbaitsu/Compressor
- * version: 1.0
- */
 public class ImageUtil {
 
     private static final String TAG = "ImageUtil";

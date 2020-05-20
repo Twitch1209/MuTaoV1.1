@@ -15,9 +15,6 @@ import java.io.InputStream;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by Dash on 2017/12/8.
- */
 public class OkHttp3Util {
 
 

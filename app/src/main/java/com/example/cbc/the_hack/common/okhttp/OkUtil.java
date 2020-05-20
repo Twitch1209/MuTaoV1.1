@@ -13,13 +13,7 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 
-/**
- * author : Bafs
- * e-mail : bafs.jy@live.com
- * time   : 2018/04/29
- * desc   : okhttp util
- * version: 1.0
- */
+
 public class OkUtil {
 
     private static final long DEFAULT_MILLISECONDS = 50000;      //默认的超时时间

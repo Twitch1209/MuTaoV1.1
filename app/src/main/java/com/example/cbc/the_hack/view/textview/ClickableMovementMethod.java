@@ -8,13 +8,7 @@ import android.text.style.ClickableSpan;
 import android.view.MotionEvent;
 import android.widget.TextView;
 
-/**
- * author : Bafs
- * e-mail : bafs.jy@live.com
- * time   : 2018/05/27
- * desc   : 支持ClickableImageSpan
- * version: 1.0
- */
+
 public class ClickableMovementMethod extends LinkMovementMethod {
 
     private static ClickableMovementMethod sInstance;

@@ -14,15 +14,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.cl.lingxi.R;
+import com.example.cbc.R;
 
-/**
- * author : Bafs
- * e-mail : bafs.jy@live.com
- * time   : 2017/11/03
- * desc   : 动态图片
- * version: 1.0
- */
 public class FeedPhotoAdapter extends RecyclerView.Adapter<FeedPhotoAdapter.PhotoViewHolder> {
 
     private int mType = 0;

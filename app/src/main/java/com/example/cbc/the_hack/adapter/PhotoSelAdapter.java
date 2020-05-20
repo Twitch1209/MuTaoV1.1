@@ -14,15 +14,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.cl.lingxi.R;
+import com.example.cbc.R;
 
-/**
- * author : Bafs
- * e-mail : bafs.jy@live.com
- * time   : 2017/11/03
- * desc   : 图片选择
- * version: 1.0
- */
 public class PhotoSelAdapter extends RecyclerView.Adapter<PhotoSelAdapter.PhotoViewHolder> {
 
     public static final String mPhotoAdd = "file:///android_asset/icon_photo_add.png";

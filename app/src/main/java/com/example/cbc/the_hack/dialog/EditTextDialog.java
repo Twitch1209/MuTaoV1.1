@@ -15,15 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
-import me.cl.lingxi.R;
+import com.example.cbc.R;
 
-/**
- * author : Bafs
- * e-mail : bafs.jy@live.com
- * time   : 2018/08/02
- * desc   : 文本编辑Dialog
- * version: 1.0
- */
 public class EditTextDialog extends DialogFragment {
 
     private static final String TITLE = "title";

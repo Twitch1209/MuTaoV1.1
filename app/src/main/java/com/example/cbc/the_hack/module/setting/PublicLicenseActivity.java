@@ -19,7 +19,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.cl.lingxi.R;
+import com.example.cbc.R;
 
 import com.example.cbc.the_hack.entity.PublicLicense;
 

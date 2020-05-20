@@ -6,13 +6,6 @@ import com.bumptech.glide.annotation.GlideExtension;
 import com.bumptech.glide.annotation.GlideOption;
 import com.bumptech.glide.request.RequestOptions;
 
-/**
- * @author : happyc
- * e-mail : bafs.jy@live.com
- * time   : 2018/05/31
- * desc   : GlideOption
- * version: 1.0
- */
 @GlideExtension
 public class CustomGlideExtension {
 

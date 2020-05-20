@@ -39,13 +39,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
-/**
- * author : Bafs
- * e-mail : bafs.jy@live.com
- * time   : 2018/04/29
- * desc   : post请求
- * version: 1.0
- */
 public class PostRequest {
 
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");

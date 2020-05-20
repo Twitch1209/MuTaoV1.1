@@ -5,13 +5,6 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.text.style.ImageSpan;
 import android.view.View;
-/**
- * author : Bafs
- * e-mail : bafs.jy@live.com
- * time   : 2018/05/27
- * desc   : 可点击ImageSpan
- * version: 1.0
- */
 public abstract class ClickableImageSpan extends ImageSpan {
 
     public ClickableImageSpan(Drawable b, int verticalAlignment) {

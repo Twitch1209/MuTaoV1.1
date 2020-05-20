@@ -14,13 +14,6 @@ import com.bumptech.glide.load.engine.cache.LruResourceCache;
 import com.bumptech.glide.module.AppGlideModule;
 import com.bumptech.glide.request.RequestOptions;
 
-/**
- * @author : happyc
- * e-mail : bafs.jy@live.com
- * time   : 2018/05/31
- * desc   : 实现AppGlideModule，GlideV4
- * version: 1.0
- */
 @GlideModule
 public class CustomGlideModule extends AppGlideModule {
 

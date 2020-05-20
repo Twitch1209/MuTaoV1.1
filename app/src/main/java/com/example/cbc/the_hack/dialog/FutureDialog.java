@@ -21,15 +21,8 @@ import com.example.cbc.the_hack.common.util.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.cl.lingxi.R;
+import com.example.cbc.R;
 
-/**
- * @author : Bafs
- * e-mail : bafs.jy@live.com
- * time   : 2018/10/12
- * desc   : 写给未来设置
- * version: 1.0
- */
 public class FutureDialog extends DialogFragment {
 
     @BindView(R.id.future_type)

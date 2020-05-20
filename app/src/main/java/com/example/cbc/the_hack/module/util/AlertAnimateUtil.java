@@ -2,12 +2,9 @@ package com.example.cbc.the_hack.module.util;
 
 import android.view.Gravity;
 
-import me.cl.lingxi.R;
+import com.example.cbc.R;
 
 
-/**
- * Created by wang on 2018/8/8.
- **/
 public class AlertAnimateUtil {
     private static final int INVALID = -1;
     /**

@@ -11,16 +11,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.cl.lingxi.R;
+import com.example.cbc.R;
 import com.example.cbc.the_hack.entity.PublicLicense;
 
-/**
- * author : happyc
- * e-mail : bafs.jy@live.com
- * time   : 2017/09/07
- * desc   :
- * version: 1.0
- */
 public class PublicLicenseAdapter extends RecyclerView.Adapter<PublicLicenseAdapter.ViewHolder> {
 
     private List<PublicLicense> mList;

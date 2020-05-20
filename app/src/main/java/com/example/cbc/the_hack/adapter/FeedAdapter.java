@@ -11,6 +11,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cbc.R;
 import com.example.cbc.library.loadmore.LoadMord;
 import com.example.cbc.library.loadmore.LoadMoreViewHolder;
 import com.example.cbc.the_hack.common.util.ContentUtil;
@@ -27,7 +28,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.cl.lingxi.R;
 
 import com.example.cbc.the_hack.entity.Feed;
 import com.example.cbc.the_hack.entity.User;

@@ -5,13 +5,7 @@ import android.view.View;
 import android.webkit.WebChromeClient;
 import android.widget.FrameLayout;
 
-/**
- * author : Bafs
- * e-mail : bafs.jy@live.com
- * time   : 2018/05/13
- * desc   : ChromeClient
- * version: 1.0
- */
+
 public class MoeChromeClient extends WebChromeClient implements MediaPlayer.OnCompletionListener {
 
     private static final String TAG = "MoeChromeClient";

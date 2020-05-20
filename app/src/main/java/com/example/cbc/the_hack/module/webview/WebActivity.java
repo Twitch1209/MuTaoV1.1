@@ -19,13 +19,9 @@ import com.example.cbc.the_hack.view.webview.MoeWebView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.cl.lingxi.R;
+import com.example.cbc.R;
 
-/**
- * WebActivity
- * 设置独立的web进程，与主进程隔开
- * {@code <activity android:name=".webview.WebViewActivity" android:launchMode="singleTop" android:process=":remote" android:screenOrientation="unspecified" />}
- */
+
 public class WebActivity extends BaseActivity {
 
     private static final String TAG = "WebActivity";

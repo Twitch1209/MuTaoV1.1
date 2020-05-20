@@ -11,9 +11,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-/**
- * Created by wang on 2018/8/8.
- **/
+
 public class FileUtils {
     private static final String TAG = "FileUtils";
     public static String SDPATH = Environment.getExternalStorageDirectory() + "/formats/";

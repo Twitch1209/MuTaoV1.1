@@ -11,13 +11,9 @@ import com.example.cbc.library.util.ToolbarUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.cl.lingxi.R;
+import com.example.cbc.R;
 import com.example.cbc.the_hack.common.util.SPUtil;
 
-/**
- * 设置
- * https://github.com/shellhub/blog/issues/29
- */
 public class SettingsActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)

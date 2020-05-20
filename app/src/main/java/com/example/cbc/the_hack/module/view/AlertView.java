@@ -26,11 +26,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import me.cl.lingxi.R;
+import com.example.cbc.R;
 
-/**
- * Created by wang on 2018/8/8.
- **/
 public class AlertView {
     public static enum Style {
         ActionSheet, Alert

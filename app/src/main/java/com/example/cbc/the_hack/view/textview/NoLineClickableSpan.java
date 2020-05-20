@@ -5,15 +5,9 @@ import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.view.View;
 
-import me.cl.lingxi.R;
+import com.example.cbc.R;
 
-/**
- * author : Bafs
- * e-mail : bafs.jy@live.com
- * time   : 2018/05/27
- * desc   : ClickableSpan去下划线
- * version: 1.0
- */
+
 public class NoLineClickableSpan extends ClickableSpan {
 
     private Context mContext;

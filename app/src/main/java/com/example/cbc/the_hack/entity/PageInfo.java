@@ -2,13 +2,6 @@ package com.example.cbc.the_hack.entity;
 
 import java.util.List;
 
-/**
- * author : Bafs
- * e-mail : bafs.jy@live.com
- * time   : 2018/04/22
- * desc   : 分页信息
- * version: 1.0
- */
 public class PageInfo<E> {
 
     private Integer pageNum;

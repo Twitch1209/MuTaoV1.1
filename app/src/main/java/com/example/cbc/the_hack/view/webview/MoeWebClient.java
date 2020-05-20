@@ -13,15 +13,9 @@ import android.webkit.WebViewClient;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.cl.lingxi.R;
+import com.example.cbc.R;
 
-/**
- * author : Bafs
- * e-mail : bafs.jy@live.com
- * time   : 2018/05/13
- * desc   : WebClient
- * version: 1.0
- */
+
 public class MoeWebClient extends WebViewClient {
 
     private static final String TAG = "MoeWebClient";

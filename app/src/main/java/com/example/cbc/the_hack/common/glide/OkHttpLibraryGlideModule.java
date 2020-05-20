@@ -12,13 +12,6 @@ import com.bumptech.glide.module.LibraryGlideModule;
 
 import java.io.InputStream;
 
-/**
- * @author : happyc
- * e-mail : bafs.jy@live.com
- * time   : 2018/05/31
- * desc   : 实现LibraryGlideModule
- * version: 1.0
- */
 @GlideModule
 public class OkHttpLibraryGlideModule extends LibraryGlideModule {
 

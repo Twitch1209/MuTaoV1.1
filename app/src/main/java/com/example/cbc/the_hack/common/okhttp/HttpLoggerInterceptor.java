@@ -15,13 +15,6 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okhttp3.internal.http.HttpHeaders;
 
-/**
- * author : Bafs
- * e-mail : bafs.jy@live.com
- * time   : 2018/04/29
- * desc   : 请求日志log
- * version: 1.0
- */
 
 public class HttpLoggerInterceptor implements Interceptor {
 

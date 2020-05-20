@@ -19,10 +19,6 @@ import java.util.regex.Pattern;
 import com.example.cbc.library.util.ColorPhrase;
 import com.example.cbc.the_hack.entity.Like;
 
-/**
- * 工具类
- * Created by bafsj on 17/3/1.
- */
 public class Utils {
 
     /**

@@ -16,7 +16,7 @@ import com.example.cbc.the_hack.common.util.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.cl.lingxi.R;
+import com.example.cbc.R;
 
 public class MessageChildFragment extends BaseFragment {
 

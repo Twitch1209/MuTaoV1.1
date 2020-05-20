@@ -7,13 +7,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.cbc.R;
+
 import java.util.List;
 
-import me.cl.lingxi.R;
 
-/**
- * Created by wang on 2018/8/8.
- **/
 public class AlertViewAdapter extends BaseAdapter {
     private List<String> mDatas;
     private List<String> mDestructive;

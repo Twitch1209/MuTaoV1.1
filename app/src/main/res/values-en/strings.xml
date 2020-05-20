@@ -36,7 +36,7 @@
     <string name="hint_new_pwd">new password</string>
     <string name="hint_do_pwd">Confirm Password</string>
     <string name="hint_phone">phone</string>
-    <string name="hint_register_agree">同意灵悉的注册邀请，因为没有其他的选择</string>
+    <string name="hint_register_agree">同意木桃的注册邀请，因为没有其他的选择</string>
     <string name="hint_share">写下今天的普通心情吧</string>
     <string name="hint_comment">吐槽一下</string>
     <string name="hint_attention">Concern</string>
@@ -66,7 +66,7 @@
     <string name="title_bar_future">Future</string>
     <string name="title_bar_feed_detail">Feed details</string>
     <string name="title_bar_personal_info">Personal information</string>
-    <string name="title_bar_about">About LingXi</string>
+    <string name="title_bar_about">About Mutao</string>
     <string name="title_bar_my_reply">My reply</string>
     <string name="title_bar_relevant">Related to Me</string>
     <string name="title_bar_conversation">Session</string>

@@ -13,7 +13,7 @@ import com.example.cbc.the_hack.entity.Poem;
 
 import java.util.List;
 
-import me.cl.lingxi.R;
+import com.example.cbc.R;
 
 /**
  * Created by ABINGCBC

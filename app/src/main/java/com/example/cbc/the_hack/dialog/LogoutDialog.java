@@ -14,15 +14,8 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.cl.lingxi.R;
+import com.example.cbc.R;
 
-/**
- * author : Bafs
- * e-mail : bafs.jy@live.com
- * time   : 2018/08/02
- * desc   : 登出Dialog
- * version: 1.0
- */
 public class LogoutDialog extends DialogFragment {
 
     @BindView(R.id.prompt_info)

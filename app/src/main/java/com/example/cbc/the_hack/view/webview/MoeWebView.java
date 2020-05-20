@@ -9,10 +9,6 @@ import android.webkit.WebView;
 
 import com.example.cbc.library.BuildConfig;
 
-/**
- * WebView
- * Created by bafsj on 2016-12-28.
- */
 public class MoeWebView extends WebView {
 
     public MoeWebView(Context context) {

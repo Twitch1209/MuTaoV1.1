@@ -35,7 +35,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.cl.lingxi.R;
+import com.example.cbc.R;
 
 
 public class CardFragment extends BaseFragment implements CardStackListener {

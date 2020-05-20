@@ -16,21 +16,13 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import me.cl.lingxi.R;
+import com.example.cbc.R;
 import com.example.cbc.the_hack.common.config.Constants;
 import com.example.cbc.the_hack.view.textview.ClickableImageSpan;
 import com.example.cbc.the_hack.view.textview.ClickableMovementMethod;
 import com.example.cbc.the_hack.view.textview.NoLineClickableSpan;
 import com.example.cbc.the_hack.module.member.UserActivity;
 
-/**
- * author : Bafs
- * e-mail : bafs.jy@live.com
- * time   : 2018/05/27
- * desc   : SpannableString,话题等处理
- * 参考：https://blog.csdn.net/u014620028/article/details/78394157
- * version: 1.0
- */
 public class FeedContentUtil {
 
     private static final String AT = "@[\\w\\p{InCJKUnifiedIdeographs}-]{1,26}";

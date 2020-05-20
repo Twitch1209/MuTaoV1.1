@@ -26,7 +26,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.cl.lingxi.R;
+import com.example.cbc.R;
 import com.example.cbc.the_hack.common.config.Api;
 import com.example.cbc.the_hack.common.config.Constants;
 import com.example.cbc.the_hack.common.okhttp.OkUtil;

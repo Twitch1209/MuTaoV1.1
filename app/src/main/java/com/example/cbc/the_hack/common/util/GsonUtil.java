@@ -6,10 +6,6 @@ import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Gson工具类
- * Created by bafsj on 17/3/31.
- */
 public class GsonUtil {
 
     private static Gson gson = new Gson();

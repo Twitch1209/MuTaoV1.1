@@ -32,13 +32,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.ResponseBody;
 
-/**
- * @author : happyc
- * e-mail : bafs.jy@live.com
- * time   : 2019/04/21
- * desc   : get请求
- * version: 1.0
- */
 public class GetRequest {
 
     private static final long LOAD_TIME = 1500;

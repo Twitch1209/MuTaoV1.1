@@ -11,7 +11,7 @@ android {
     compileSdkVersion configInfo.compileSdkVersion
     compileOptions.encoding = "UTF-8"
     defaultConfig {
-        applicationId "me.cl.lingxi"
+        applicationId "com.mutao.cn"
         minSdkVersion configInfo.minSdkVersion
         targetSdkVersion configInfo.targetSdkVersion
         versionCode 196
@@ -23,23 +23,23 @@ android {
 
     productFlavors {
         alpha {
-            applicationId "me.cl.lingxi.alpha"
+            applicationId "com.mutao.cn.alpha"
             manifestPlaceholders = [
-                    'APP_ID'  : "me.cl.lingxi.alpha",
+                    'APP_ID'  : "com.mutao.cn.alpha",
                     'APP_NAME': "@string/app_name_alpha"
             ]
         }
         local {
-            applicationId "me.cl.lingxi.local"
+            applicationId "com.mutao.cn.local"
             manifestPlaceholders = [
-                    'APP_ID'  : "me.cl.lingxi.local",
+                    'APP_ID'  : "com.mutao.cn.local",
                     'APP_NAME': "@string/app_name_local"
             ]
         }
         online {
-            applicationId "me.cl.lingxi"
+            applicationId "com.mutao.cn"
             manifestPlaceholders = [
-                    'APP_ID'  : "me.cl.lingxi",
+                    'APP_ID'  : "com.mutao.cn",
                     'APP_NAME': "@string/app_name"
             ]
         }

@@ -2,10 +2,6 @@ package com.example.cbc.the_hack.common.config;
 
 import com.example.cbc.library.BuildConfig;
 
-/**
- * api manage
- * Created by bafsj on 17/3/1.
- */
 public class Api {
 
     /**

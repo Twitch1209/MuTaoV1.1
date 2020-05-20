@@ -2,13 +2,7 @@ package com.example.cbc.the_hack.entity;
 
 import java.io.Serializable;
 
-/**
- * author : Bafs
- * e-mail : bafs.jy@live.com
- * time   : 2017/09/07
- * desc   : 开源相关
- * version: 1.0
- */
+
 public class PublicLicense implements Serializable{
 
     private String name;
